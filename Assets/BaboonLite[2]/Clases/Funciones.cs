@@ -1,16 +1,17 @@
 using System;
 using System.Linq;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace BaboOnLite 
 {
-    internal static class Otros {
-        internal static T Get<T>(this IEnumerable<T> array, int i) => array.ToArray()[i];
-    }
-
-    public static class Array1D
+    public static class ArrayFun
     {
+        //Funcion para coger un elemento de un IEnumerable
+        internal static T Get<T>(this IEnumerable<T> array, int i) => array.ToArray()[i];
+
+        //INARRAY/INLIST
+        #region
         //Convierte el texto en array
         private static IEnumerable<T> _Array<T>(string text)
         {
@@ -34,8 +35,13 @@ namespace BaboOnLite
 
             return array;
         }
+        //Funciones de llamada
         public static T[] inArray<T>(this string text) => _Array<T>(text).ToArray();
         public static List<T> inList<T>(this string text) => _Array<T>(text).ToList();
+        #endregion
+
+        //INSTRING
+        #region
         //Convierte de array a texto
         public static string inString<T>(this IEnumerable<T> array)
         {
@@ -48,6 +54,10 @@ namespace BaboOnLite
             }
             return text + "]";
         }
+        #endregion
+
+        //FOREACH
+        #region
         //Bucle de array
         public static void ForEach<T>(this IEnumerable<T> array, Action<T> func)
         {
@@ -63,6 +73,10 @@ namespace BaboOnLite
                 func(array.Get(i), i);
             }
         }
+        #endregion
+
+        //EVERY
+        #region
         //Devuelve true si todas las condiciones son correctas
         public static bool Every<T>(this IEnumerable<T> array, Func<T, bool> func)
         {
@@ -72,6 +86,10 @@ namespace BaboOnLite
             }
             return true;
         }
+        #endregion
+
+        //SOME
+        #region
         //Devuelve true si alguna condicion es correcta
         public static bool Some<T>(this IEnumerable<T> array, Func<T, bool> func)
         {
@@ -81,6 +99,10 @@ namespace BaboOnLite
             }
             return false;
         }
+        #endregion
+
+        //FILTER
+        #region
         //Devuelve los elementos que cumplan la condicion
         private static IEnumerable<T> _Filter<T>(IEnumerable<T> array, Func<T, bool> func)
         {
@@ -91,8 +113,13 @@ namespace BaboOnLite
             }
             return result;
         }
+        //Funciones de llamada
         public static T[] Filter<T>(this T[] array, Func<T, bool> func) => _Filter(array, func).ToArray();
         public static List<T> Filter<T>(this List<T> array, Func<T, bool> func) => _Filter(array, func).ToList();
+        #endregion
+
+        //MAP
+        #region
         //Devuelve el array modificado
         public static IEnumerable<T2> _Map<T1, T2>(IEnumerable<T1> array, Func<T1, T2> func)
         {
@@ -103,8 +130,13 @@ namespace BaboOnLite
             }
             return result;
         }
+        //Funciones de llamada
         public static T2[] Map<T1, T2>(this T1[] array, Func<T1, T2> func) => _Map(array, func).ToArray();
         public static List<T2> Map<T1, T2>(this List<T1> array, Func<T1, T2> func) => _Map(array, func).ToList();
+        #endregion
+
+        //SORT
+        #region
         //Devuelve el array ordenado
         public static IEnumerable<T> _Sort<T>(this IEnumerable<T> array)
         {
@@ -112,8 +144,13 @@ namespace BaboOnLite
             Array.Sort(result);
             return result;
         }
+        //Funciones de llamada
         public static T[] Order<T>(this T[] array) => _Sort(array).ToArray();
         public static List<T> Order<T>(this List<T> array) => _Sort(array).ToList();
+        #endregion
+
+        //ORDER
+        #region
         //Devuelve el array ordenado segun la condicion
         public static IEnumerable<T> _Sort<T>(this IEnumerable<T> array, Comparison<T> func)
         {
@@ -121,8 +158,13 @@ namespace BaboOnLite
             Array.Sort(result, func);
             return result;
         }
+        //Funciones de llamada
         public static T[] Order<T>(this T[] array, Comparison<T> func) => _Sort(array, func).ToArray();
         public static List<T> Order<T>(this List<T> array, Comparison<T> func) => _Sort(array, func).ToList();
+        #endregion
+
+        //INSIDE
+        #region
         public static bool Inside<T>(this IEnumerable<T> array, int value)
         {
             if (value >= 0 && value < array.Count())
@@ -131,12 +173,14 @@ namespace BaboOnLite
             }
             return false;
         }
-
+        #endregion
 
     }
 
     public static class Bug
     {
+        //LOG
+        #region
         //Muestra un log del string y lo devuelve
         public static T Log<T>(this T text)
         {
@@ -145,6 +189,10 @@ namespace BaboOnLite
 
             return text;
         }
+        #endregion
+
+        //[BUG]LOG
+        #region
         //Muestra un log con informacion basica
         public static void Log(Color color = default)
         {
@@ -153,25 +201,46 @@ namespace BaboOnLite
 
             Debug.LogFormat("<color=#{0}>{1}</color>", colorHex, message);
         }
+        #endregion
+
+        //[NUG]LOGLITE
+        #region
+        //Muestra un log del error de BaboonLite
+        public static void LogLite(string texto)
+        {
+            string colorHex = ColorUtility.ToHtmlStringRGBA(Color.green);
+            Debug.LogErrorFormat("<color=#{0}>{1}</color>", colorHex, texto);
+        }
+        #endregion
+
     }
 
     public static class Numeros {
-        public static float EquacionLimitada(this float variable, float equacion, float limite) {
-            variable += equacion;
-            if (variable > limite) {
-                variable -= limite+1;
+
+        #region
+        //Te suma o resta un valor a tu variable poniendole un limite
+        public static float EquacionLimitada(this float variable, float valor, float limite)
+        {
+            variable += valor;
+            if (variable > limite)
+            {
+                variable -= limite + 1;
             }
-            if (variable < 0) {
-                variable += limite+1;
+            if (variable < 0)
+            {
+                variable += limite + 1;
             }
 
             return variable;
         }
+        #endregion
     }
 
     public static class Transformar {
 
-        //Transform
+        //TRANSFORM
+        #region
+        //Te permite modificar unicamente el valor X, Y o Z de un Vector3
         public static Vector3 Y(this Vector3 trans, float num) 
         {
             return new Vector3(trans.x, trans.y + num, trans.z);
@@ -184,33 +253,26 @@ namespace BaboOnLite
         {
             return new Vector3(trans.x, trans.y, trans.z + num);
         }
+        #endregion
 
-        //Quaternion
+        //QUATERNION
+        #region
         public static Quaternion Y(this Quaternion trans, float num)
         {
-            // Asegurarse de que num esté en el rango 0-360
             num = trans.eulerAngles.y.EquacionLimitada(num, 360);
-
-            // Crear un nuevo Quaternion con los componentes modificados
             return Quaternion.Euler(trans.eulerAngles.x, num, trans.eulerAngles.z);
         }
         public static Quaternion X(this Quaternion trans, float num)
         {
-            // Asegurarse de que num esté en el rango 0-360
             num = trans.eulerAngles.x.EquacionLimitada(num, 360);
-
-
-            // Crear un nuevo Quaternion con los componentes modificados
             return Quaternion.Euler(num, trans.eulerAngles.y, trans.eulerAngles.z);
         }
         public static Quaternion Z(this Quaternion trans, float num)
         {
-            // Asegurarse de que num esté en el rango 0-360
             num = trans.eulerAngles.z.EquacionLimitada(num, 360);
-
-            // Crear un nuevo Quaternion con los componentes modificados
             return Quaternion.Euler(trans.eulerAngles.x, trans.eulerAngles.y, num);
         }
+        #endregion
     }
 
 }
