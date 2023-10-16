@@ -1,20 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using UnityEngine.SceneManagement;
 
 namespace BaboOnLite
 {
     [DefaultExecutionOrder(-1)]
     [AddComponentMenu("BaboOnLite/Controlador")]
     [DisallowMultipleComponent]
-    //[HelpURL("")]
+    [HelpURL("https://docs.google.com/document/d/1zPv7QP-ZyisadG5zREiMmzV7UWsYTUPZIPT0f_YlhSE/edit?usp=sharing")]
 
-    public partial class Controlador {
-        //Instancias estaticas--------------------------------------
+    //VARIABLES
+    public partial class Controlador
+    {
+
+        //DELEGADOS
+        #region delegados
         //Tiempo
         public delegate Coroutine C1(float t, Action f, bool bucle = false);
         //Movimiento
@@ -29,7 +32,6 @@ namespace BaboOnLite
         public delegate Coroutine C8(Camera t, Color c, float duracion);
         public delegate Coroutine C9(Renderer t, Color c, float duracion);
         public delegate Coroutine C10(TextMeshProUGUI t, Color c, float duracion);
-
         //Rotacion
         public delegate void C11(string nombre, float duracion);
         public delegate bool C12(string nombre);
@@ -46,17 +48,24 @@ namespace BaboOnLite
         public static C10 ColorText;
         public static C11 IniciarEspera;
         public static C12 Esperando;
+        #endregion
 
+        //PRIVADAS
 
-        //Variables privadas------------------------------------------
+        //Movimiento y rotacion
         private Trans moviendo = new Trans();
         private Trans rotando = new Trans();
 
+        //Espera
         private Dictionary<string, bool> espera = new Dictionary<string, bool>();
     }
+    //FUNCIONES
     public partial class Controlador : MonoBehaviour
     {
-        private void Awake(){
+        private void Awake()
+        {
+            //DELEGAODS
+            #region delegados
             Rutina = rutina;
             Mover = mover;
             MoverCanva = mover;
@@ -69,18 +78,20 @@ namespace BaboOnLite
             ColorText = color;
             IniciarEspera = iniciarEspera;
             Esperando = esperando;
-
+            #endregion 
         }
 
-        //Rutina-----------------------------------------------------
+        //RUTINA
         #region tiempo
-        public Coroutine rutina(float t, Action f, bool bucle = false) { //LLAMADA
+        //Hace una corrutina con el tiempo y la funcion que quieras
+        private Coroutine rutina(float t, Action f, bool bucle = false)
+        { //LLAMADA
             return StartCoroutine(Corrutina(
                 t, f, bucle
             ));
         }
-
-        private IEnumerator Corrutina(float t, Action f, bool bucle) { //EJECUCION
+        private IEnumerator Corrutina(float t, Action f, bool bucle)
+        { //EJECUCION
             yield return new WaitForSeconds(t);
             f.Invoke();
 
@@ -90,10 +101,13 @@ namespace BaboOnLite
         }
         #endregion
 
-        //Movimiento-------------------------------------------------
+        //MOVIMIENTO
         #region movimiento
-        private Coroutine mover<T>(T t, Movimiento m) { //LLAMADA
-            if (t is Transform trans) {
+        //Le da un movimiento lineal a tu objeto
+        private Coroutine mover<T>(T t, Movimiento m)
+        { //LLAMADA
+            if (t is Transform trans)
+            {
                 if (moviendo.trans.Some((e) => e == trans))
                 {
                     return null;
@@ -113,8 +127,8 @@ namespace BaboOnLite
                 t, m
             ));
         }
-  
-        private IEnumerator MoverCorrutina<T>(T t, Movimiento m) { //EJECUCION
+        private IEnumerator MoverCorrutina<T>(T t, Movimiento m)
+        { //EJECUCION
 
             Vector3 posicionInicial = Vector3.zero;
             float tiempoPasado = 0f;
@@ -143,9 +157,11 @@ namespace BaboOnLite
         }
         #endregion
 
-        //Rotacion---------------------------------------------------
+        //ROTACION
         #region rotacion
-        private Coroutine rotar<T>(T t, Rotacion r) { //LLAMADA
+        //Le da una rotacion lineal a tu objeto
+        private Coroutine rotar<T>(T t, Rotacion r)
+        { //LLAMADA
             if (t is Transform trans)
             {
                 if (rotando.trans.Some((e) => e == trans))
@@ -167,8 +183,8 @@ namespace BaboOnLite
                 t, r
             ));
         }
-
-        private IEnumerator RotarCorrutina<T>(T t, Rotacion r) { //EJECUCION
+        private IEnumerator RotarCorrutina<T>(T t, Rotacion r)
+        { //EJECUCION
 
             Quaternion rotacionInicial = Quaternion.Euler(0, 0, 0);
             float tiempoPasado = 0f;
@@ -197,9 +213,11 @@ namespace BaboOnLite
         }
         #endregion
 
-        //Color------------------------------------------------------
+        //COLOR
         #region color
-        private Coroutine color<T>(T f, Color c, float duracion) { //LLAMADA
+        //Le da un cambio lineal a tu color
+        private Coroutine color<T>(T f, Color c, float duracion)
+        { //LLAMADA
             return StartCoroutine(ColorCorrutina(
                 f, c, duracion
             ));
@@ -240,7 +258,8 @@ namespace BaboOnLite
             if (f is TextMeshProUGUI finalText) finalText.color = c2;
         }
 
-        private Color DarColor(Color c1, Color c2, float duracion) { 
+        private Color DarColor(Color c1, Color c2, float duracion)
+        {
             return Color.Lerp(
                     c1,
                     c2,
@@ -250,21 +269,24 @@ namespace BaboOnLite
 
         #endregion
 
-        //Espera-----------------------------------------------------
+        //ESPERA
         #region espera
-        private void iniciarEspera(string nombre, float duracion) {
+        private void iniciarEspera(string nombre, float duracion)
+        {//LLAMADA
             espera[nombre] = false;
-            Rutina(duracion, () => {
+            Rutina(duracion, () =>
+            {
                 espera[nombre] = true;
             });
         }
-        private bool esperando(string nombre) {
-            if (!espera.ContainsKey(nombre)) {
+        private bool esperando(string nombre)
+        {//EJECCUCION
+            if (!espera.ContainsKey(nombre))
+            {
                 espera[nombre] = true;
             }
             return espera[nombre];
         }
         #endregion
-
     }
 }

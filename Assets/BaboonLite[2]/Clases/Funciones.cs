@@ -11,53 +11,54 @@ namespace BaboOnLite
         internal static T Get<T>(this IEnumerable<T> array, int i) => array.ToArray()[i];
 
         //INARRAY/INLIST
-        #region
-        //Convierte el texto en array
-        private static IEnumerable<T> _Array<T>(string text)
+        #region inArray/inList
+        //Convierte el textoo en array
+        private static IEnumerable<T> _Array<T>(string texto)
         {
-            int start = text.IndexOf("[");
-            int end = text.IndexOf("]");
-            string subText = text.Substring(start + 1, end - start - 1);
+            string subtexto = texto.Substring(
+                texto.IndexOf("[") + 1,
+                texto.IndexOf("]") - texto.IndexOf("[") - 1
+            );
 
             List<T> array = new List<T>();
-            foreach (string s in subText.Split(','))
+            foreach (string s in subtexto.Split(','))
             {
                 try
                 {
-                    T item = (T)Convert.ChangeType(s.Trim(), typeof(T));
-                    array.Add(item);
+                    T elemento = (T)Convert.ChangeType(s.Trim(), typeof(T));
+                    array.Add(elemento);
                 }
                 catch (FormatException)
                 {
-                    Debug.LogWarning($"'{s.Trim()}' no es del tipo {typeof(T).Name}");
+                    Bug.LogLite("[BL][Funciones: 1] No se a podido convertir en Array/Lista");
                 }
             }
 
             return array;
         }
         //Funciones de llamada
-        public static T[] inArray<T>(this string text) => _Array<T>(text).ToArray();
-        public static List<T> inList<T>(this string text) => _Array<T>(text).ToList();
+        public static T[] inArray<T>(this string texto) => _Array<T>(texto).ToArray();
+        public static List<T> inList<T>(this string texto) => _Array<T>(texto).ToList();
         #endregion
 
         //INSTRING
-        #region
-        //Convierte de array a texto
+        #region inString
+        //Convierte de array a textoo
         public static string inString<T>(this IEnumerable<T> array)
         {
-            string text = "[";
+            string texto = "[";
             for (int i = 0; i < array.Count(); i++)
             {
-                text += (i != array.Count() - 1)
+                texto += (i != array.Count() - 1)
                     ? $"{array.Get(i)},"
                     : $"{array.Get(i)}";
             }
-            return text + "]";
+            return texto + "]";
         }
         #endregion
 
         //FOREACH
-        #region
+        #region foreach
         //Bucle de array
         public static void ForEach<T>(this IEnumerable<T> array, Action<T> func)
         {
@@ -76,42 +77,42 @@ namespace BaboOnLite
         #endregion
 
         //EVERY
-        #region
+        #region every
         //Devuelve true si todas las condiciones son correctas
         public static bool Every<T>(this IEnumerable<T> array, Func<T, bool> func)
         {
-            foreach (T item in array)
+            foreach (T elemento in array)
             {
-                if (!func(item)) return false;
+                if (!func(elemento)) return false;
             }
             return true;
         }
         #endregion
 
         //SOME
-        #region
+        #region some
         //Devuelve true si alguna condicion es correcta
         public static bool Some<T>(this IEnumerable<T> array, Func<T, bool> func)
         {
-            foreach (T item in array)
+            foreach (T elemento in array)
             {
-                if (func(item)) return true;
+                if (func(elemento)) return true;
             }
             return false;
         }
         #endregion
 
         //FILTER
-        #region
+        #region filter
         //Devuelve los elementos que cumplan la condicion
         private static IEnumerable<T> _Filter<T>(IEnumerable<T> array, Func<T, bool> func)
         {
-            List<T> result = new List<T>();
+            List<T> resultado = new List<T>();
             for (int i = 0; i < array.Count(); i++)
             {
-                if (func(array.Get(i))) result.Add(array.Get(i));
+                if (func(array.Get(i))) resultado.Add(array.Get(i));
             }
-            return result;
+            return resultado;
         }
         //Funciones de llamada
         public static T[] Filter<T>(this T[] array, Func<T, bool> func) => _Filter(array, func).ToArray();
@@ -119,55 +120,28 @@ namespace BaboOnLite
         #endregion
 
         //MAP
-        #region
+        #region map
         //Devuelve el array modificado
         public static IEnumerable<T2> _Map<T1, T2>(IEnumerable<T1> array, Func<T1, T2> func)
         {
-            List<T2> result = new List<T2>();
+            List<T2> resultado = new List<T2>();
             for (int i = 0; i < array.Count(); i++)
             {
-                result.Add(func(array.Get(i)));
+                resultado.Add(func(array.Get(i)));
             }
-            return result;
+            return resultado;
         }
         //Funciones de llamada
         public static T2[] Map<T1, T2>(this T1[] array, Func<T1, T2> func) => _Map(array, func).ToArray();
         public static List<T2> Map<T1, T2>(this List<T1> array, Func<T1, T2> func) => _Map(array, func).ToList();
         #endregion
 
-        //SORT
-        #region
-        //Devuelve el array ordenado
-        public static IEnumerable<T> _Sort<T>(this IEnumerable<T> array)
-        {
-            T[] result = array.ToArray();
-            Array.Sort(result);
-            return result;
-        }
-        //Funciones de llamada
-        public static T[] Order<T>(this T[] array) => _Sort(array).ToArray();
-        public static List<T> Order<T>(this List<T> array) => _Sort(array).ToList();
-        #endregion
-
-        //ORDER
-        #region
-        //Devuelve el array ordenado segun la condicion
-        public static IEnumerable<T> _Sort<T>(this IEnumerable<T> array, Comparison<T> func)
-        {
-            T[] result = array.ToArray();
-            Array.Sort(result, func);
-            return result;
-        }
-        //Funciones de llamada
-        public static T[] Order<T>(this T[] array, Comparison<T> func) => _Sort(array, func).ToArray();
-        public static List<T> Order<T>(this List<T> array, Comparison<T> func) => _Sort(array, func).ToList();
-        #endregion
-
         //INSIDE
-        #region
-        public static bool Inside<T>(this IEnumerable<T> array, int value)
+        #region inside
+        //Te dice si el numero del elemeno existe
+        public static bool Inside<T>(this IEnumerable<T> array, int valor)
         {
-            if (value >= 0 && value < array.Count())
+            if (valor >= 0 && valor < array.Count())
             {
                 return true;
             }
@@ -180,31 +154,31 @@ namespace BaboOnLite
     public static class Bug
     {
         //LOG
-        #region
+        #region log
         //Muestra un log del string y lo devuelve
-        public static T Log<T>(this T text)
+        public static T Log<T>(this T texto)
         {
-            string convertedText = Convert.ToString(text);
-            Debug.Log(convertedText);
+            string convertedtexto = Convert.ToString(texto);
+            Debug.Log(convertedtexto);
 
-            return text;
+            return texto;
         }
         #endregion
 
         //[BUG]LOG
-        #region
+        #region [bug]Log
         //Muestra un log con informacion basica
         public static void Log(Color color = default)
         {
-            string message = "<b>**-------**</b>";
+            string mensaje = "<b>**-------**</b>";
             string colorHex = ColorUtility.ToHtmlStringRGBA((color == default) ? Color.white : color);
 
-            Debug.LogFormat("<color=#{0}>{1}</color>", colorHex, message);
+            Debug.LogFormat("<color=#{0}>{1}</color>", colorHex, mensaje);
         }
         #endregion
 
-        //[NUG]LOGLITE
-        #region
+        //[BUG]LOGLITE - PARA USO DE LA LIBRERIA
+        #region [bug]LogLite
         //Muestra un log del error de BaboonLite
         public static void LogLite(string texto)
         {
@@ -217,7 +191,8 @@ namespace BaboOnLite
 
     public static class Numeros {
 
-        #region
+        //EQUACIONLIMITADA
+        #region equacionLimitada
         //Te suma o resta un valor a tu variable poniendole un limite
         public static float EquacionLimitada(this float variable, float valor, float limite)
         {
@@ -239,7 +214,7 @@ namespace BaboOnLite
     public static class Transformar {
 
         //TRANSFORM
-        #region
+        #region transform
         //Te permite modificar unicamente el valor X, Y o Z de un Vector3
         public static Vector3 Y(this Vector3 trans, float num) 
         {
@@ -256,7 +231,7 @@ namespace BaboOnLite
         #endregion
 
         //QUATERNION
-        #region
+        #region quaternion
         public static Quaternion Y(this Quaternion trans, float num)
         {
             num = trans.eulerAngles.y.EquacionLimitada(num, 360);

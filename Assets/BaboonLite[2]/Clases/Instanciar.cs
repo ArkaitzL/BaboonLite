@@ -12,7 +12,7 @@ namespace BaboOnLite
         private static bool suscrito;
 
         //AÑADIR
-        #region
+        #region añadir
         public static void Añadir(T instancia)
         {
             //Cuando cambia de escena elimina las instancias locales
@@ -44,7 +44,7 @@ namespace BaboOnLite
         #endregion
 
         //COGER
-        #region
+        #region coger
         public static T Coger()
         {
             Type tipo = typeof(T);
