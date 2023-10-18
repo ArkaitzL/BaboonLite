@@ -6,13 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class Pruebas : MonoBehaviour
 {
+    private int cont;
+
     void Awake()
     {
-        Instanciar<Pruebas>.Añadir(this);
+        //Instanciar<Pruebas>.Añadir(this);
+        Instanciar<Pruebas>.Singletons(this, gameObject);
     }
 
     public void Probar() {
-        Debug.Log("Funciona!!");
+        Debug.Log("Funciona->" + ++cont);
     }
 
     public void Update() {

@@ -61,6 +61,24 @@ namespace BaboOnLite
         }
         #endregion
 
+        //SINGLETONS
+        #region singletons
+
+        public static void Singletons(T instancia, GameObject gameObject)
+        {
+            Type tipo = typeof(T);
+            if (instancias.ContainsKey(tipo))
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            instancias.Add(tipo, new Info(instancia, true));
+            DontDestroyOnLoad(gameObject);
+        }
+
+        #endregion
+
         //Clase para almacenar la Info que vas a guardar
         struct Info
         {
