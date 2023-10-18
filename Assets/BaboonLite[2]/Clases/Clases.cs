@@ -19,7 +19,7 @@ namespace BaboOnLite
         {
             this.duracion = duracion;
             this.destino = destino;
-            this.curva = anim ?? AnimationCurve.Linear(0f, 0f, 1f, 1f);
+            this.curva = anim ?? AnimationCurve.EaseInOut(0.0f, 0.0f, 1.0f, 1.0f);
         }
     }
     [Serializable]
@@ -29,12 +29,14 @@ namespace BaboOnLite
         public Quaternion destino;
         public AnimationCurve curva;
 
+        //Elegir solo la rotacion z. 2D
         public Rotacion(float duracion, int destino, AnimationCurve anim = null)
         {
             this.duracion = duracion;
             this.destino = Quaternion.Euler(0, 0, destino);
-            this.curva = anim ?? AnimationCurve.Linear(0f, 0f, 1f, 1f);
+            this.curva = anim ?? AnimationCurve.EaseInOut(0.0f, 0.0f, 1.0f, 1.0f);
         }
+        //Elegir el Quaternion. 3D
         public Rotacion(float duracion, Quaternion destino, AnimationCurve anim = null)
         {
             this.duracion = duracion;
