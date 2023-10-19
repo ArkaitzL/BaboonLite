@@ -53,10 +53,19 @@ namespace BaboOnLite
     }
     #endregion
 
+    //LIMITES
+    #region limites
+    [System.Serializable]
+    public class Manual
+    {
+        [SerializeField] internal Transform izquierdo, derecho;
+    }
+    #endregion
+
     //DICCIONARIO 
     #region diccionario
     //[Serializable]
-    //public class DictionarySerializable<T>
+    //public class DictionaryBG<T>
     //{
     //    public List<Elementos> data = new List<Elementos>();
 
