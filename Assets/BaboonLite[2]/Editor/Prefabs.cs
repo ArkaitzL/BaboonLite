@@ -8,18 +8,6 @@ public class Prefabs
     //Ruta de los prefabs
 
     //OBJETO 1
-    [MenuItem("GameObject/UI/BaboOnLite/Consola (PC)")]
-    private static void InstantiatePC(MenuCommand menuCommand)
-    {
-        Instantiate("Consola/Consola (PC).prefab");
-    }
-    //OBJETO 2
-    [MenuItem("GameObject/UI/BaboOnLite/Consola (Android)")]
-    private static void InstantiateAndroid(MenuCommand menuCommand)
-    {
-        Instantiate("Consola/Consola (Android).prefab");
-    }
-    //OBJETO 3
     [MenuItem("GameObject/UI/BaboOnLite/Fps (Android)")]
     private static void InstantiateFps(MenuCommand menuCommand)
     {
