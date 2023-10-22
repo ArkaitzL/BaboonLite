@@ -14,7 +14,7 @@ namespace BaboOnLite
 
         //Transforms de los limites
         [SerializeField] private Manual manual;
-        [Space]
+        [Header("Automatico")]
         //Automatizar
         [SerializeField] private bool alturaAutomatica;
         [SerializeField] private bool instanciaDefecto;
@@ -23,16 +23,16 @@ namespace BaboOnLite
 
         private float camWidth;
 
-        //Valida el uso de height junto a instance
-        #region Validate
         private void OnValidate()
         {
+            //Valida el uso de height junto a instance
+            #region Altura automatica
             if (instanciaDefecto)
             {
                 alturaAutomatica = true;
             }
+            #endregion
         }
-        #endregion
 
         //Posiciona los elementos a los bordes de la camara
         private void Awake()
@@ -76,8 +76,9 @@ namespace BaboOnLite
             #endregion
         }
 
-        //Instancia dos BoxCollider2D
+        //Todas las funciones
         #region Funciones
+        //Instancia dos BoxCollider2D
         private Transform Instance(string name)
         {
             GameObject ob = new GameObject(name);

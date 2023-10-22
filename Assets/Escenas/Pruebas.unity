@@ -282,14 +282,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1349009571}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a43edd947990c840bf89bac8965414f, type: 3}
+  m_Script: {fileID: 11500000, guid: f8f728b94c3226d43a7f468699482f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manual:
-    izquierdo: {fileID: 0}
-    derecho: {fileID: 0}
-  alturaAutomatica: 1
-  instanciaDefecto: 1
+  activarTiempo: 1
+  reiniciar: 72000000
+  pausar: 70000000
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

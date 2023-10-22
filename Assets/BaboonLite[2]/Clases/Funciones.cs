@@ -10,9 +10,8 @@ namespace BaboOnLite
         //Funcion para coger un elemento de un IEnumerable
         internal static T Get<T>(this IEnumerable<T> array, int i) => array.ToArray()[i];
 
-        //INARRAY/INLIST
+        //Convierte el texto en array
         #region inArray/inList
-        //Convierte el textoo en array
         private static IEnumerable<T> _Array<T>(string texto)
         {
             string subtexto = texto.Substring(
@@ -41,9 +40,8 @@ namespace BaboOnLite
         public static List<T> inList<T>(this string texto) => _Array<T>(texto).ToList();
         #endregion
 
-        //INSTRING
-        #region inString
         //Convierte de array a textoo
+        #region inString
         public static string inString<T>(this IEnumerable<T> array)
         {
             string texto = "[";
@@ -57,9 +55,8 @@ namespace BaboOnLite
         }
         #endregion
 
-        //FOREACH
-        #region foreach
         //Bucle de array
+        #region foreach
         public static void ForEach<T>(this IEnumerable<T> array, Action<T> func)
         {
             for (int i = 0; i < array.Count(); i++)
@@ -76,9 +73,8 @@ namespace BaboOnLite
         }
         #endregion
 
-        //EVERY
-        #region every
         //Devuelve true si todas las condiciones son correctas
+        #region every
         public static bool Every<T>(this IEnumerable<T> array, Func<T, bool> func)
         {
             foreach (T elemento in array)
@@ -89,9 +85,8 @@ namespace BaboOnLite
         }
         #endregion
 
-        //SOME
-        #region some
         //Devuelve true si alguna condicion es correcta
+        #region some
         public static bool Some<T>(this IEnumerable<T> array, Func<T, bool> func)
         {
             foreach (T elemento in array)
@@ -102,9 +97,8 @@ namespace BaboOnLite
         }
         #endregion
 
-        //FILTER
-        #region filter
         //Devuelve los elementos que cumplan la condicion
+        #region filter
         private static IEnumerable<T> _Filter<T>(IEnumerable<T> array, Func<T, bool> func)
         {
             List<T> resultado = new List<T>();
@@ -119,9 +113,8 @@ namespace BaboOnLite
         public static List<T> Filter<T>(this List<T> array, Func<T, bool> func) => _Filter(array, func).ToList();
         #endregion
 
-        //MAP
-        #region map
         //Devuelve el array modificado
+        #region map
         public static IEnumerable<T2> _Map<T1, T2>(IEnumerable<T1> array, Func<T1, T2> func)
         {
             List<T2> resultado = new List<T2>();
@@ -136,9 +129,8 @@ namespace BaboOnLite
         public static List<T2> Map<T1, T2>(this List<T1> array, Func<T1, T2> func) => _Map(array, func).ToList();
         #endregion
 
-        //INSIDE
-        #region inside
         //Te dice si el numero del elemeno existe
+        #region inside
         public static bool Inside<T>(this IEnumerable<T> array, int valor)
         {
             if (valor >= 0 && valor < array.Count())
@@ -153,9 +145,8 @@ namespace BaboOnLite
 
     public static class Bug
     {
-        //LOG
-        #region log
         //Muestra un log del string y lo devuelve
+        #region log
         public static T Log<T>(this T texto)
         {
             string convertedtexto = Convert.ToString(texto);
@@ -165,9 +156,8 @@ namespace BaboOnLite
         }
         #endregion
 
-        //[BUG]LOG
-        #region [bug]Log
         //Muestra un log con informacion basica
+        #region [bug]log
         public static void Log(Color color = default)
         {
             string mensaje = "<b>**-------**</b>";
@@ -177,8 +167,8 @@ namespace BaboOnLite
         }
         #endregion
 
-        //[BUG]LOGLITE - PARA USO DE LA LIBRERIA
-        #region [bug]LogLite
+        //Muestra un log del error de BaboonLite - PARA USO DE LA LIBRERIA
+        #region [bug]logLite
         //Muestra un log del error de BaboonLite
         public static void LogLite(string texto)
         {
@@ -191,9 +181,8 @@ namespace BaboOnLite
 
     public static class Numeros {
 
-        //EQUACIONLIMITADA
-        #region equacionLimitada
         //Te suma o resta un valor a tu variable poniendole un limite
+        #region equacionLimitada
         public static float EquacionLimitada(this float variable, float valor, float limite)
         {
             variable += valor;
@@ -213,9 +202,8 @@ namespace BaboOnLite
 
     public static class Transformar {
 
-        //TRANSFORM
-        #region transform
         //Te permite modificar unicamente el valor X, Y o Z de un Vector3
+        #region transform
         public static Vector3 Y(this Vector3 trans, float num) 
         {
             return new Vector3(trans.x, trans.y + num, trans.z);
@@ -230,7 +218,7 @@ namespace BaboOnLite
         }
         #endregion
 
-        //QUATERNION
+        //Te permite modificar unicamente el valor X, Y o Z de un Quaternion
         #region quaternion
         public static Quaternion Y(this Quaternion trans, float num)
         {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BaboOnLite
 {
-    //CONTROLADOR
+    //Clases que se usan en el componenete CONTROLADOR
     #region controlador
 
     //PUBLICAS
@@ -53,7 +53,7 @@ namespace BaboOnLite
     }
     #endregion
 
-    //LIMITES
+    //Clases que se usan en el componenete LIMITES
     #region limites
     [System.Serializable]
     public class Manual

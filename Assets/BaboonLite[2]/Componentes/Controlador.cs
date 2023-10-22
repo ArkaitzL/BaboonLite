@@ -15,8 +15,9 @@ namespace BaboOnLite
     //VARIABLES
     public partial class Controlador
     {
-
         //DELEGADOS
+
+        //Creacion de delegados
         #region delegados
         //Tiempo
         public delegate Coroutine C1(float t, Action f, bool bucle = false);
@@ -64,7 +65,7 @@ namespace BaboOnLite
     {
         private void Awake()
         {
-            //DELEGAODS
+            //Asignacion de delegados
             #region delegados
             Rutina = rutina;
             Mover = mover;
@@ -81,7 +82,7 @@ namespace BaboOnLite
             #endregion 
         }
 
-        //RUTINA
+        //Rutina que espera x tiempo para llamar a tu funcion
         #region tiempo
         //Hace una corrutina con el tiempo y la funcion que quieras
         private Coroutine rutina(float t, Action f, bool bucle = false)
@@ -101,7 +102,7 @@ namespace BaboOnLite
         }
         #endregion
 
-        //MOVIMIENTO
+        //Movimiento continuo con animacion
         #region movimiento
         //Le da un movimiento lineal a tu objeto
         private Coroutine mover<T>(T t, Movimiento m)
@@ -157,7 +158,7 @@ namespace BaboOnLite
         }
         #endregion
 
-        //ROTACION
+        //Rotacion continua con animacion
         #region rotacion
         //Le da una rotacion lineal a tu objeto
         private Coroutine rotar<T>(T t, Rotacion r)
@@ -213,7 +214,7 @@ namespace BaboOnLite
         }
         #endregion
 
-        //COLOR
+        //Cambio de color poco a poco
         #region color
         //Le da un cambio lineal a tu color
         private Coroutine color<T>(T f, Color c, float duracion)
@@ -269,7 +270,7 @@ namespace BaboOnLite
 
         #endregion
 
-        //ESPERA
+        //Bloquea una accion durante x tiempo
         #region espera
         private void iniciarEspera(string nombre, float duracion)
         {//LLAMADA

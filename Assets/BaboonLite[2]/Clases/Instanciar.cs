@@ -8,10 +8,11 @@ namespace BaboOnLite
 {
     public class Instanciar<T> : MonoBehaviour
     {
+        //VARIABLES
         private static Dictionary<Type, Info> instancias = new Dictionary<Type, Info>();
         private static bool suscrito;
 
-        //AÑADIR
+        //Añade una clase al diccionario
         #region añadir
         public static void Añadir(T instancia)
         {
@@ -43,7 +44,7 @@ namespace BaboOnLite
         }
         #endregion
 
-        //COGER
+        //Te devuelve la clase del T
         #region coger
         public static T Coger()
         {
@@ -61,7 +62,7 @@ namespace BaboOnLite
         }
         #endregion
 
-        //SINGLETONS
+        //Crea un singleton
         #region singletons
 
         public static void Singletons(T instancia, GameObject gameObject)
