@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class Pruebas : MonoBehaviour
 {
     private int cont;
+    public DictionaryBG<bool> bg = new();
 
     void Awake()
     {

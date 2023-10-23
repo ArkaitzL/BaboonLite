@@ -12,7 +12,7 @@ namespace BaboOnLite {
 
 
         //CANVA 1
-        [MenuItem("GameObject/UI/BaboOnLite/Canva")]
+        [MenuItem("GameObject/UI/BaboOnLite/Canvas")]
         private static void InstanciarCanva(MenuCommand menuCommand)
         {
             ElementoCanvas(null);
@@ -33,7 +33,7 @@ namespace BaboOnLite {
             {
                 //Busca la ruta
                 string ruta = AssetDatabase.GUIDToAssetPath(
-                    AssetDatabase.FindAssets("BaboOnLite")[0]
+                    AssetDatabase.FindAssets("Editor")[0]
                 ) + ruta_carpeta;
 
                 //Lo crea
@@ -60,7 +60,7 @@ namespace BaboOnLite {
             //VARIABLES
             Dictionary<string, string> nombres = new Dictionary<string, string>
             {
-                { "canva", "canvas-" },
+                { "canvas", "canvas-" },
                 { "eventsystem", "es-" },
             };
 
@@ -69,7 +69,7 @@ namespace BaboOnLite {
             Canvas canvas = Object.FindObjectOfType<Canvas>();
             if (canvas == null)
             {
-                GameObject canvasGO = new GameObject(nombres["canva"]);
+                GameObject canvasGO = new GameObject(nombres["canvas"]);
                 canvas = canvasGO.AddComponent<Canvas>();
                 canvasGO.AddComponent<CanvasScaler>().uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
                 canvasGO.AddComponent<GraphicRaycaster>();
@@ -95,8 +95,11 @@ namespace BaboOnLite {
 
             //Instancia el elemento del prefab
             GameObject elemento = Elemento(nombre);
-            //Lo añade dentro del Canvas
-            elemento.transform.SetParent(canvas.transform, false);
+            if (elemento != null)
+            {
+                //Lo añade dentro del Canvas
+                elemento.transform.SetParent(canvas.transform, false);
+            }
         }
     }
 

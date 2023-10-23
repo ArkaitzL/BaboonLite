@@ -64,66 +64,66 @@ namespace BaboOnLite
 
     //DICCIONARIO 
     #region diccionario
-    //[Serializable]
-    //public class DictionaryBG<T>
-    //{
-    //    public List<Elementos> data = new List<Elementos>();
+    [Serializable]
+    public class DictionaryBG<T>
+    {
+        public List<Elementos> data = new List<Elementos>();
 
-    //    [Serializable]
-    //    public class Elementos
-    //    {
-    //        public string indice;
-    //        public T valor;
+        [Serializable]
+        public class Elementos
+        {
+            public string indice;
+            public T valor;
 
-    //        public Elementos(string indice, T valor)
-    //        {
-    //            this.valor = valor;
-    //            this.indice = indice;
-    //        }
-    //    }
+            public Elementos(string indice, T valor)
+            {
+                this.valor = valor;
+                this.indice = indice;
+            }
+        }
 
-    //    public T Get(string indice)
-    //    {
-    //        T valor = default(T);
+        //public T Get(string indice)
+        //{
+        //    T valor = default(T);
 
-    //        data.ForEach((element) =>
-    //        {
-    //            if (indice.ToLower() == element.indice.ToLower())
-    //            {
-    //                valor = element.valor;
-    //            }
-    //        });
+        //    data.ForEach((element) =>
+        //    {
+        //        if (indice.ToLower() == element.indice.ToLower())
+        //        {
+        //            valor = element.valor;
+        //        }
+        //    });
 
-    //        return valor;
-    //    }
-    //    public T Get(int indice)
-    //    {
-    //        return data[indice].valor;
-    //    }
+        //    return valor;
+        //}
+        //public T Get(int indice)
+        //{
+        //    return data[indice].valor;
+        //}
 
-    //    public void Add(string indice, T valor)
-    //    {
-    //        data.Add(new Elementos(indice, valor));
-    //    }
+        //public void Add(string indice, T valor)
+        //{
+        //    data.Add(new Elementos(indice, valor));
+        //}
 
-    //    public bool Inside(string indice)
-    //    {
-    //        bool dentro = false;
-    //        data.ForEach((element) =>
-    //        {
-    //            if (indice.ToLower() == element.indice.ToLower())
-    //            {
-    //                dentro = true;
-    //            }
-    //        });
-    //        return dentro;
-    //    }
-    //    public bool Inside(int indice)
-    //    {
-    //        return (indice >= 0 && indice < data.Count);
-    //    }
+        //public bool Inside(string indice)
+        //{
+        //    bool dentro = false;
+        //    data.ForEach((element) =>
+        //    {
+        //        if (indice.ToLower() == element.indice.ToLower())
+        //        {
+        //            dentro = true;
+        //        }
+        //    });
+        //    return dentro;
+        //}
+        //public bool Inside(int indice)
+        //{
+        //    return (indice >= 0 && indice < data.Count);
+        //}
 
-    //    public List<Elementos> ToList() => data;
-    //}
+        //public List<Elementos> ToList() => data;
+    }
     #endregion
 }
