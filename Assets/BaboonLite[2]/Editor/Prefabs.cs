@@ -1,61 +1,103 @@
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
-public class Prefabs
-{
-    //Ruta de los prefabs
-
-    //OBJETO 1
-    [MenuItem("GameObject/UI/BaboOnLite/Fps (Android)")]
-    private static void InstantiateFps(MenuCommand menuCommand)
+namespace BaboOnLite {
+    public class Prefabs
     {
-        Instantiate("Fps/Fps.prefab");
-    }
+        //Ruta de la carpeta prefab dentro de BaboonLite
+        private static string ruta_carpeta = "/Prefabs/";
 
-    private static void Instantiate(string name) {
 
-        //Busca la ruta
-        string path = AssetDatabase.GUIDToAssetPath(
-            AssetDatabase.FindAssets("BaboOnLite")[0]
-        ) + "/Prefabs/";
-
-        //Busca el canvas y si no existe lo crea
-        Canvas canvas = Object.FindObjectOfType<Canvas>();
-        if (canvas == null)
+        //CANVA 1
+        [MenuItem("GameObject/UI/BaboOnLite/Canva")]
+        private static void InstanciarCanva(MenuCommand menuCommand)
         {
-            GameObject canvasGO = new GameObject("Canvas");
-            canvas = canvasGO.AddComponent<Canvas>();
-            canvasGO.AddComponent<CanvasScaler>().uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            canvasGO.AddComponent<GraphicRaycaster>();
-
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-
+            ElementoCanvas(null);
+        }
+        //CANVA 2
+        [MenuItem("GameObject/UI/BaboOnLite/Fps (Android)")]
+        private static void InstanciarFps(MenuCommand menuCommand)
+        {
+            ElementoCanvas("Fps/Fps.prefab");
         }
 
-        //EventSystem
-        EventSystem eventSystem = Object.FindObjectOfType<EventSystem>();
-        if (eventSystem == null)
+        private static GameObject Elemento(string nombre) 
         {
-            GameObject eventSystemGO = new GameObject("EventSystem");
-            eventSystem = eventSystemGO.AddComponent<EventSystem>();
-            eventSystemGO.AddComponent<StandaloneInputModule>();
+            //Instancia el elemento del prefab
+            #region elemento
+            GameObject elemento = null;
+            if (nombre != "" && nombre != null)
+            {
+                //Busca la ruta
+                string ruta = AssetDatabase.GUIDToAssetPath(
+                    AssetDatabase.FindAssets("BaboOnLite")[0]
+                ) + ruta_carpeta;
 
+                //Lo crea
+                GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(ruta + nombre);
+                if (prefab == null)
+                {
+                    Bug.LogLite("[BL][Prefabs: 1] No existe el prefab seleccionado");
+                }
+
+                elemento = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+                elemento.name = prefab.name;
+
+                //Otros
+                Undo.RegisterCreatedObjectUndo(elemento, "Instantiate Custom Prefab");
+                Selection.activeGameObject = elemento;
+            }
+            #endregion
+
+            return elemento;
+        }
+
+        private static void ElementoCanvas(string nombre)
+        {
+            //VARIABLES
+            Dictionary<string, string> nombres = new Dictionary<string, string>
+            {
+                { "canva", "canvas-" },
+                { "eventsystem", "es-" },
+            };
+
+            //Busca el canvas y si no existe lo crea
+            #region canvas
+            Canvas canvas = Object.FindObjectOfType<Canvas>();
+            if (canvas == null)
+            {
+                GameObject canvasGO = new GameObject(nombres["canva"]);
+                canvas = canvasGO.AddComponent<Canvas>();
+                canvasGO.AddComponent<CanvasScaler>().uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+                canvasGO.AddComponent<GraphicRaycaster>();
+
+                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+
+            }
+            #endregion
+
+            //Busca el EventSystem y si no existe lo crea
+            #region eventsystem
+            EventSystem eventSystem = Object.FindObjectOfType<EventSystem>();
+            if (eventSystem == null)
+            {
+                GameObject eventSystemGO = new GameObject(nombres["eventsystem"]);
+                eventSystemGO.AddComponent<StandaloneInputModule>();
+                eventSystem = eventSystemGO.AddComponent<EventSystem>();
+
+                //Lo añade dentro del Canvas
+                eventSystemGO.transform.parent = canvas.transform;
+            }
+            #endregion
+
+            //Instancia el elemento del prefab
+            GameObject elemento = Elemento(nombre);
             //Lo añade dentro del Canvas
-            eventSystemGO.transform.parent = canvas.transform;
+            elemento.transform.SetParent(canvas.transform, false);
         }
-
-        //Instancia el prefab
-        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path + name);
-        GameObject instance = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
-        instance.name = prefab.name;
-
-        //Lo añade dentro del Canvas
-        instance.transform.SetParent(canvas.transform, false);
-
-        //Otros
-        Undo.RegisterCreatedObjectUndo(instance, "Instantiate Custom Prefab");
-        Selection.activeGameObject = instance;
     }
+
 }
