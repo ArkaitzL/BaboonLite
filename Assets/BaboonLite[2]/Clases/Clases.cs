@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace BaboOnLite
 {
+    //CLASES 
+
     //Clases que se usan en el componenete CONTROLADOR
     #region controlador
 
@@ -67,8 +69,11 @@ namespace BaboOnLite
     [Serializable]
     public class DictionaryBG<T>
     {
+        //VARIABLES
         public List<Elementos> data = new List<Elementos>();
 
+        //Contenido que va en la lista elementos
+        #region contenido   
         [Serializable]
         public class Elementos
         {
@@ -81,49 +86,59 @@ namespace BaboOnLite
                 this.indice = indice;
             }
         }
+        #endregion
 
-        //public T Get(string indice)
-        //{
-        //    T valor = default(T);
+        //Coger informacion del diccionario
+        #region get
+        //Usando un indice string
+        public T Get(string indice)
+        {
+            T valor = default(T);
 
-        //    data.ForEach((element) =>
-        //    {
-        //        if (indice.ToLower() == element.indice.ToLower())
-        //        {
-        //            valor = element.valor;
-        //        }
-        //    });
+            data.ForEach((element) =>
+            {
+                if (indice.ToLower() == element.indice.ToLower())
+                {
+                    valor = element.valor;
+                }
+            });
 
-        //    return valor;
-        //}
-        //public T Get(int indice)
-        //{
-        //    return data[indice].valor;
-        //}
+            return valor;
+        }
+        //Usando un indice int
+        public T Get(int indice) => data[indice].valor;
+        #endregion
 
-        //public void Add(string indice, T valor)
-        //{
-        //    data.Add(new Elementos(indice, valor));
-        //}
+        //Añade elementos al diccionario
+        #region add
+        public void Add(string indice, T valor)
+        {
+            data.Add(new Elementos(indice, valor));
+        }
+        #endregion
 
-        //public bool Inside(string indice)
-        //{
-        //    bool dentro = false;
-        //    data.ForEach((element) =>
-        //    {
-        //        if (indice.ToLower() == element.indice.ToLower())
-        //        {
-        //            dentro = true;
-        //        }
-        //    });
-        //    return dentro;
-        //}
-        //public bool Inside(int indice)
-        //{
-        //    return (indice >= 0 && indice < data.Count);
-        //}
+        //Te dice si contiene un valor dentro del diccionario
+        #region inside
+        //Usando un indice string
+        public bool Inside(string indice)
+        {
+            bool dentro = false;
+            data.ForEach((element) =>
+            {
+                if (indice.ToLower() == element.indice.ToLower())
+                {
+                    dentro = true;
+                }
+            });
+            return dentro;
+        }
+        //Usando un indice int
+        public bool Inside(int indice)
+        {
+            return (indice >= 0 && indice < data.Count);
+        }
+        #endregion
 
-        //public List<Elementos> ToList() => data;
     }
     #endregion
 }

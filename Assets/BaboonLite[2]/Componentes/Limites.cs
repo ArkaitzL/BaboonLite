@@ -26,7 +26,7 @@ namespace BaboOnLite
         private void OnValidate()
         {
             //Valida el uso de height junto a instance
-            #region Altura automatica
+            #region altura automatica
             if (instanciaDefecto)
             {
                 alturaAutomatica = true;
@@ -38,7 +38,7 @@ namespace BaboOnLite
         private void Awake()
         {
             //Comprueba que la instancia manual este bien
-            #region Errores
+            #region errores
             if (!instanciaDefecto)
             {
                 if (manual.derecho == null || manual.izquierdo == null)
@@ -52,7 +52,7 @@ namespace BaboOnLite
             #endregion
 
             //Crea los limites de la camara
-            #region Crear limites
+            #region crear limites
             //Longitud de la camara
             camWidth = Camera.main.orthographicSize * 2 * Camera.main.aspect;
 
@@ -77,7 +77,7 @@ namespace BaboOnLite
         }
 
         //Todas las funciones
-        #region Funciones
+        #region funciones
         //Instancia dos BoxCollider2D
         private Transform Instance(string name)
         {
