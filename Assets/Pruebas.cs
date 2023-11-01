@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class Pruebas : MonoBehaviour
 {
-    void Start()
+    void Update()
     {
-
-        Debug.Log(Save.ventana.data.language);
-        Save.ventana.data.language += 1;
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Save.Data.language += 10;
+            Debug.Log(Save.Data.language);
+        }
     }
 }
