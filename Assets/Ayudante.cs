@@ -7,7 +7,6 @@ public class Ayudante : MonoBehaviour
 {
     void Start()
     {
-        Debug.Log("Probando:");
-        Instanciar<Pruebas>.Coger().Probar();
+
     }
 }
