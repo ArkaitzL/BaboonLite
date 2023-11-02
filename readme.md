@@ -1,5 +1,3 @@
-Entendido, aquí está la documentación mejorada siguiendo tus sugerencias:
-
 **CLASES:**
 
 **Instancias[CLASE] (2 FUNCIONES):**
