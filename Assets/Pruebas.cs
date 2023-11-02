@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class Pruebas : MonoBehaviour
 {
+    [SerializeField] private DictionaryBG<Lenguaje> textos = new();
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
