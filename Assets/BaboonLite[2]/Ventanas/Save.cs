@@ -9,8 +9,11 @@ namespace BaboOnLite {
     {
         //Variables
         [SerializeField] private bool mensajes;
+
         public static event Action actualizar;
         private bool play;
+
+        private SerializedObject serializedObject;
 
         //Variables que almacenan la data
         #region data
@@ -72,14 +75,14 @@ namespace BaboOnLite {
             //Imprime el contenido de data
             #region data
 
-            SerializedObject objeto = new SerializedObject(this);
-            SerializedProperty contenido = objeto.FindProperty("dataLocal");
-            EditorGUILayout.PropertyField(contenido, true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("dataLocal"));
 
             #endregion
         }
         private void OnEnable()
         {
+            serializedObject = new SerializedObject(this);
+
             #region cargar
             if (play)
             {

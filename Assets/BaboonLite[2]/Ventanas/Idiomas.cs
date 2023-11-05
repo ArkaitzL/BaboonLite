@@ -45,6 +45,7 @@ namespace BaboOnLite
             EditorGUILayout.PropertyField(serializedObject.FindProperty("textos"));
 
             serializedObject.ApplyModifiedProperties();
+
             #endregion
         }
         private void OnEnable()
