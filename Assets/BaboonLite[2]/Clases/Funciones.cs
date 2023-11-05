@@ -147,10 +147,11 @@ namespace BaboOnLite
     {
         //Muestra un log del string y lo devuelve
         #region log
-        public static T Log<T>(this T texto)
+        public static T Log<T>(this T texto, string otro = null)
         {
             string convertedtexto = Convert.ToString(texto);
-            Debug.Log(convertedtexto);
+            string otrotexto = otro != null ? $"{otro} : " : "";
+            Debug.Log($"{otrotexto} {convertedtexto}");
 
             return texto;
         }

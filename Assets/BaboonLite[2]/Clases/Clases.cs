@@ -70,15 +70,15 @@ namespace BaboOnLite
     public class DictionaryBG<T>
     {
         //VARIABLES
-        public List<Elementos> data = new List<Elementos>();
+        [SerializeField] public List<Elementos> data = new List<Elementos>();
 
         //Contenido que va en la lista elementos
         #region contenido   
         [Serializable]
         public class Elementos
         {
-            public string indice;
-            public T valor;
+            [SerializeField] public string indice;
+            [SerializeField] public T valor;
 
             public Elementos(string indice, T valor)
             {

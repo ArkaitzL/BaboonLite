@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using TMPro;
 
 namespace BaboOnLite
 {
     public class Idiomas : EditorWindow
     {
         //Variables
-        [SerializeField] private List<Lenguaje> lenguajes = new();
-        [SerializeField] private DictionaryBG<Lenguaje> textos = new();
+        [SerializeField] private string basura;
+        [SerializeField] private List<string> lenguajes = new();
+        [SerializeField] private DictionaryBG<TextMeshProUGUI> textos = new();
+
+        private SerializedObject serializedObject;
 
         private bool play;
-        
+
         [MenuItem("Window/BaboOnLite/Idiomas")]
         public static void IniciarVentana()
         {
@@ -23,6 +27,7 @@ namespace BaboOnLite
 
         private void OnGUI()
         {
+
             //Crea la GUI basica de la ventana
 
             GUILayout.Label("Idiomas: Administra los idiomas de tu juego facilmente", EditorStyles.boldLabel);
@@ -30,20 +35,25 @@ namespace BaboOnLite
 
             #region listas
 
-            SerializedObject o = new SerializedObject(this);
-            CargarList(o, "lenguajes");
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("basura"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("lenguajes"));
 
             //Imprimir todos los labels con un for
 
             Separador();
-            CargarList(o, "textos");
+
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("textos"));
+
+            serializedObject.ApplyModifiedProperties();
             #endregion
         }
         private void OnEnable()
         {
+            serializedObject = new SerializedObject(this);
+
             if (play)
             {
-              
+
             }
 
 
@@ -55,22 +65,12 @@ namespace BaboOnLite
             #endregion
         }
 
-        void Separador(int altura = 1)
+        private void Separador(int altura = 1)
         {
             Rect rect = EditorGUILayout.GetControlRect(false, altura);
             rect.height = altura;
             EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
         }
 
-        void CargarList(SerializedObject objeto, string nombre)
-        {
-            SerializedProperty propiedad = objeto.FindProperty(nombre);
-            EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(propiedad, true);
-            if (EditorGUI.EndChangeCheck())
-            {
-                objeto.ApplyModifiedProperties();
-            }
-        }
     }
 }
