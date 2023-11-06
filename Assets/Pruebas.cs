@@ -6,12 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class Pruebas : MonoBehaviour
 {
-    [SerializeField] private DictionaryBG<Lenguaje> textos = new();
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
+            Debug.Log("SI");
             Save.Data.language += 10;
             Debug.Log(Save.Data.language);
         }

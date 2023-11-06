@@ -11,9 +11,8 @@ namespace BaboOnLite {
         [SerializeField] private bool mensajes;
 
         public static event Action actualizar;
+        private Vector2 scroll1 = Vector2.zero;
         private bool play;
-
-        private SerializedObject serializedObject;
 
         //Variables que almacenan la data
         #region data
@@ -51,11 +50,10 @@ namespace BaboOnLite {
             GUILayout.Label("Save: Guarda tus datos de manera facil y comoda", EditorStyles.boldLabel);
 
             EditorGUILayout.Space(10);
-
             mensajes = EditorGUILayout.Toggle("Mostrar mensajes: ", mensajes);
-
             EditorGUILayout.Space(10);
 
+            //Eliminar data
             if (GUILayout.Button("Eliminar data"))
             {
                 PlayerPrefs.DeleteKey("data");
@@ -65,6 +63,7 @@ namespace BaboOnLite {
 
                 if (mensajes) Debug.Log("[BL]Datos eliminados correctamente de PlayerPrefs");
             }
+            //Actualizar data
             if (GUILayout.Button("Actualizar data"))
             {
                 Actualizar();
@@ -75,14 +74,18 @@ namespace BaboOnLite {
             //Imprime el contenido de data
             #region data
 
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("dataLocal"));
+            scroll1 = EditorGUILayout.BeginScrollView(scroll1);
 
+            //Imprime la data
+            SerializedObject objeto = new SerializedObject(this);
+            SerializedProperty contenido = objeto.FindProperty("dataLocal");
+            EditorGUILayout.PropertyField(contenido, true);
+
+            EditorGUILayout.EndScrollView();
             #endregion
         }
         private void OnEnable()
         {
-            serializedObject = new SerializedObject(this);
-
             #region cargar
             if (play)
             {
