@@ -10,9 +10,15 @@ public class Pruebas : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Debug.Log("SI");
-            Save.Data.language += 10;
-            Debug.Log(Save.Data.language);
+            Idiomas.Alternar();
+        }
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            Idiomas.Cambiar(0);
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            Idiomas.Cambiar(1);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace BaboOnLite
         //----------------------------------------------------------------//
         //Variables por defecto: Estas varibles se usan automaticamente   //
         //----------------------------------------------------------------//
-        public int language = 0;
-        public bool mute = false;
+        public int lenguaje = 0;
+        public bool muteado = false;
     }
 }

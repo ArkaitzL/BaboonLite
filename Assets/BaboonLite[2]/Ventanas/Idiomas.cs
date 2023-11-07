@@ -12,9 +12,15 @@ namespace BaboOnLite
         //VARIABLES 
 
         //Publicas
-        [SerializeField] private List<Lenguaje> lenguajes = new();
+        [SerializeField] private List<Lenguaje> lenguajesLocal = new();
         [SerializeField] private DictionaryBG<TextMeshProUGUI> textos = new();
-        [SerializeField] private int actual;
+        [SerializeField] private int actualLocal;
+
+        //Estaticas
+        [SerializeField] private static List<Lenguaje> lenguajes = new();
+
+        //Eventos
+        public static event Action actualizar;
 
         //Privadas
         private SerializedObject serializedObject;
@@ -47,7 +53,9 @@ namespace BaboOnLite
             //Idioma actual
             #region idioma actual
 
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("actual"));
+            actualLocal = EditorGUILayout.IntSlider("Valor Entero", actualLocal, 0, lenguajesLocal.Count);
+            Save.Data.lenguaje = actualLocal;
+
             EditorGUILayout.Space(10);
 
             #endregion
@@ -64,7 +72,7 @@ namespace BaboOnLite
             }
 
             //Imprime la lista de diccionarios
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("lenguajes"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("lenguajesLocal"));
 
             if (serializedObject.ApplyModifiedProperties()) {
                 Actualizar();
@@ -103,7 +111,14 @@ namespace BaboOnLite
 
             if (play)
             {
-
+                //Evento 
+                actualizar += () =>
+                {
+                    actualLocal = Save.Data.lenguaje;
+                    Repaint();
+                };
+                //Asignar variables
+                lenguajes = lenguajesLocal;
             }
 
 
@@ -116,13 +131,36 @@ namespace BaboOnLite
         }
 
         //PUBLICAS
-        public void Alternar() { 
-        }
-        public void Cambiar()
+
+        //Funciones para cambiar el idioma actual
+        #region idioma actual
+        public static void Alternar()
         {
+            Save.Data.lenguaje = (Save.Data.lenguaje < (lenguajes.Count))
+               ? ++Save.Data.lenguaje
+               : 0;
+            actualizar?.Invoke();
         }
-        public void Coger()
+        public static void Cambiar(int i)
         {
+            //Valida la longitud de miLang
+            int longitud = lenguajes.Count;
+
+            if (i >= longitud || i < 0)
+            {
+                //No hay elementos en esa posicion del array
+                Bug.LogLite($"[BL][Idiomas: 2]No existe un elemento asignado, a la posicion {i} en tus lenguajes");
+                return;
+            }
+
+            Save.Data.lenguaje = i;
+            actualizar?.Invoke();
+        }
+        #endregion
+
+        public string Coger(int i)
+        {
+            return "";
         }
 
         //PRIVADAS
@@ -135,12 +173,16 @@ namespace BaboOnLite
         }
 
         private void Actualizar() {
+            #region actualizar lista de lenguajes
+
+            if (lenguajesLocal.Count == 0) listas.Clear();
+
             //Cuando modificas la listya comprueba que todo esta bien
-            if (lenguajes.Count == 0) return;
+            if (lenguajesLocal.Count == 0) return;
 
             listas.Clear();
             int? comparacion = null;
-            foreach (Lenguaje lenguaje in lenguajes)
+            foreach (Lenguaje lenguaje in lenguajesLocal)
             {
                 if (lenguaje == null) return;
 
@@ -157,12 +199,16 @@ namespace BaboOnLite
             {
                 listas.Add($"Palabra ->  {i}:");
 
-                for (int j = 0; j < lenguajes.Count; j++)
+                for (int j = 0; j < lenguajesLocal.Count; j++)
                 {
-                    listas.Add($"\t •  {lenguajes[j].name}: " + lenguajes[j].dictionary[i]);
+                    listas.Add($"\t •  {lenguajesLocal[j].name}: " + lenguajesLocal[j].dictionary[i]);
                 }
                 //listas.Add("\n");
             }
+
+            //Pasa al estatico
+            lenguajes = lenguajesLocal;
+            #endregion
         }
     }
 }
