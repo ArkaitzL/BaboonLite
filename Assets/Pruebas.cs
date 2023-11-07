@@ -12,13 +12,13 @@ public class Pruebas : MonoBehaviour
         {
             Idiomas.Alternar();
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.O))
         {
             Idiomas.Cambiar(0);
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            Idiomas.Cambiar(1);
+            Debug.Log(Idiomas.Coger(0));
         }
     }
 }

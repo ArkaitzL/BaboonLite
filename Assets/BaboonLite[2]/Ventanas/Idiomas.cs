@@ -53,7 +53,7 @@ namespace BaboOnLite
             //Idioma actual
             #region idioma actual
 
-            actualLocal = EditorGUILayout.IntSlider("Valor Entero", actualLocal, 0, lenguajesLocal.Count);
+            actualLocal = EditorGUILayout.IntSlider("Valor Entero", actualLocal, 0, lenguajesLocal.Count-1);
             Save.Data.lenguaje = actualLocal;
 
             EditorGUILayout.Space(10);
@@ -136,7 +136,7 @@ namespace BaboOnLite
         #region idioma actual
         public static void Alternar()
         {
-            Save.Data.lenguaje = (Save.Data.lenguaje < (lenguajes.Count))
+            Save.Data.lenguaje = (Save.Data.lenguaje < (lenguajes.Count-1))
                ? ++Save.Data.lenguaje
                : 0;
             actualizar?.Invoke();
@@ -144,7 +144,7 @@ namespace BaboOnLite
         public static void Cambiar(int i)
         {
             //Valida la longitud de miLang
-            int longitud = lenguajes.Count;
+            int longitud = lenguajes.Count-1;
 
             if (i >= longitud || i < 0)
             {
@@ -158,10 +158,7 @@ namespace BaboOnLite
         }
         #endregion
 
-        public string Coger(int i)
-        {
-            return "";
-        }
+        public static string Coger(int i) => lenguajes[Save.Data.lenguaje].dictionary[i];
 
         //PRIVADAS
 
