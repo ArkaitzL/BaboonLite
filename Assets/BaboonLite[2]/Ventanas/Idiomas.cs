@@ -154,7 +154,30 @@ namespace BaboOnLite
         }
         #endregion
 
-        public static string Get(int i) => lenguajes[Save.Data.lenguaje].dictionary[i];
+        //Coger los textos
+        #region get
+        public static string Get(int i)
+        {
+            if (lenguajes.Inside(i)) return lenguajes[Save.Data.lenguaje].dictionary[i];
+            return null;
+        }
+        public static string Get(string clave)
+        {
+            foreach (Lenguaje lenguaje in lenguajes)
+            {
+                if (lenguaje != null && lenguaje.dictionary != null)
+                {
+                    int index = Array.FindIndex(lenguaje.dictionary, elemento => elemento.Equals(clave, StringComparison.OrdinalIgnoreCase));
+                    if (index != -1)
+                    {
+                        return lenguajes[Save.Data.lenguaje].dictionary[index];
+                    }
+                }
+            }
+
+            return null;
+        }
+        #endregion
 
         //PRIVADAS
 

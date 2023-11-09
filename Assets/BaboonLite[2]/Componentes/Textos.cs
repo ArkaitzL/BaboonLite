@@ -37,6 +37,7 @@ namespace BaboOnLite {
                     else
                     {
                         //String
+                        textMesh.text = Idiomas.Get(index);
                     }
                 }
             });
