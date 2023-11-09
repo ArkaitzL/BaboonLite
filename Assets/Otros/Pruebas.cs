@@ -18,7 +18,7 @@ public class Pruebas : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log(Idiomas.Coger(0));
+            Debug.Log(Idiomas.Get(0));
         }
     }
 }

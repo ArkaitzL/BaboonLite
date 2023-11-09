@@ -12,7 +12,6 @@ namespace BaboOnLite
 
         //Publicas
         [SerializeField] private List<Lenguaje> lenguajesLocal = new();
-        [SerializeField] private DictionaryBG<TextMeshProUGUI> textos = new();
         [SerializeField] private int actualLocal;
 
         //Estaticas
@@ -20,11 +19,11 @@ namespace BaboOnLite
 
         //Eventos
         public static event Action actualizar;
+        public static event Action cambiarTextos;
 
         //Privadas
         private SerializedObject serializedObject;
         private Vector2 scroll1 = Vector2.zero;
-        private Vector2 scroll2 = Vector2.zero;
         private List<string> listas = new();
         private bool play;
 
@@ -47,13 +46,19 @@ namespace BaboOnLite
             //Inicio del GUI
             GUILayout.Label("Idiomas: Administra los idiomas de tu juego facilmente", EditorStyles.boldLabel);
             EditorGUILayout.Space(10);
-            scroll1 = EditorGUILayout.BeginScrollView(scroll1);
 
             //Idioma actual
             #region idioma actual
 
+            int actualAnterior = actualLocal;
+
             actualLocal = EditorGUILayout.IntSlider("Valor Entero", actualLocal, 0, lenguajesLocal.Count-1);
-            Save.Data.lenguaje = actualLocal;
+
+            if (actualAnterior != actualLocal)
+            {
+                Save.Data.lenguaje = actualLocal;
+                cambiarTextos?.Invoke();
+            }
 
             EditorGUILayout.Space(10);
 
@@ -81,7 +86,7 @@ namespace BaboOnLite
             GUILayout.Label("Mis diccionarios:", EditorStyles.boldLabel);
             EditorGUILayout.Space(5);
 
-            scroll2 = EditorGUILayout.BeginScrollView(scroll2);
+            scroll1 = EditorGUILayout.BeginScrollView(scroll1);
 
             foreach (var texto in listas)
             {
@@ -91,34 +96,11 @@ namespace BaboOnLite
             EditorGUILayout.EndScrollView();
 
             #endregion
-
-            Separador();
-
-            //Los textos estaticos
-            #region textMesh
-
-            if (GUILayout.Button("Escribir textos"))
-            {
-                Textos();
-            }
-
-            //Imprime la lista
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("textos"));
-            if (serializedObject.ApplyModifiedProperties())
-            {
-                Textos();
-            }
-
-            EditorGUILayout.EndScrollView();
-            EditorGUILayout.Space(10);
-
-            #endregion
         }
         private void OnEnable()
         {
             serializedObject = new SerializedObject(this);
             Actualizar();
-            Textos();
 
             //Detecta cuando entras en el playmode
             #region play
@@ -152,6 +134,7 @@ namespace BaboOnLite
                ? ++Save.Data.lenguaje
                : 0;
             actualizar?.Invoke();
+            cambiarTextos?.Invoke();
         }
         public static void Cambiar(int i)
         {
@@ -167,10 +150,11 @@ namespace BaboOnLite
 
             Save.Data.lenguaje = i;
             actualizar?.Invoke();
+            cambiarTextos?.Invoke();
         }
         #endregion
 
-        public static string Coger(int i) => lenguajes[Save.Data.lenguaje].dictionary[i];
+        public static string Get(int i) => lenguajes[Save.Data.lenguaje].dictionary[i];
 
         //PRIVADAS
 
@@ -217,30 +201,6 @@ namespace BaboOnLite
 
             //Pasa al estatico
             lenguajes = lenguajesLocal;
-
-            //Escribir los textos
-            Textos();
-            #endregion
-        }
-
-        private void Textos() {
-            #region aplicar textos
-            textos.ForEach((index, textMesh) => {
-                textMesh.Log();
-                if (textMesh != null && index != null)
-                {
-                    if (int.TryParse(index, out int i))
-                    {
-                        //Int
-                        textMesh.text = lenguajesLocal[Save.Data.lenguaje].dictionary[i];
-                    }
-                    else
-                    {
-                        //String
-                    }
-                }
-            });
-            EditorApplication.QueuePlayerLoopUpdate();
             #endregion
         }
     }

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace BaboOnLite
 {
     [DefaultExecutionOrder(0)]
-    [AddComponentMenu("BaboOnLite/2D/Limites")]
+    [AddComponentMenu("BaboOnLite/_2D/Limites")]
     [DisallowMultipleComponent]
     [HelpURL("https://docs.google.com/document/d/1zPv7QP-ZyisadG5zREiMmzV7UWsYTUPZIPT0f_YlhSE/edit?usp=sharing")]
 
