@@ -95,11 +95,11 @@ namespace BaboOnLite
         {
             T valor = default(T);
 
-            data.ForEach((element) =>
+            data.ForEach((elemento) =>
             {
-                if (indice.ToLower() == element.indice.ToLower())
+                if (indice.ToLower() == elemento.indice.ToLower())
                 {
-                    valor = element.valor;
+                    valor = elemento.valor;
                 }
             });
 
@@ -137,6 +137,22 @@ namespace BaboOnLite
         {
             return (indice >= 0 && indice < data.Count);
         }
+        #endregion
+
+        //Te da todos los elementos
+        #region foreach
+        public void ForEach(Action<string, T> func)
+        {
+            data.ForEach((elemento) =>
+            {
+                func(elemento.indice, elemento.valor);  
+            });
+        }
+        #endregion
+
+        //Te da la lonngitud de la lista
+        #region length
+        public int Length() => data.Count;
         #endregion
 
     }

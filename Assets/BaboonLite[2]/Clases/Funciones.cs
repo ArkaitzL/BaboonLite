@@ -150,7 +150,7 @@ namespace BaboOnLite
         public static T Log<T>(this T texto, string otro = null)
         {
             string convertedtexto = Convert.ToString(texto);
-            string otrotexto = otro != null ? $"{otro} : " : "";
+            string otrotexto = otro != null ? $"{otro}" : "";
             Debug.Log($"{otrotexto} {convertedtexto}");
 
             return texto;

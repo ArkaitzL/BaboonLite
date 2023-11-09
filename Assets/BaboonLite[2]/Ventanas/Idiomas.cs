@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using TMPro;
@@ -35,9 +34,9 @@ namespace BaboOnLite
             Idiomas ventana = GetWindow<Idiomas>("Idiomas");
             ventana.minSize = new Vector2(200, 200);
 
-            //Dependencia
-            Save dependecia = GetWindow<Save>("Save");
-            dependecia.minSize = new Vector2(200, 200);
+           //Dependencia
+           Save dependecia = GetWindow<Save>("Save");
+           dependecia.minSize = new Vector2(200, 200);
         }
 
         private void OnGUI()
@@ -97,17 +96,37 @@ namespace BaboOnLite
 
             //Los textos estaticos
             #region textMesh
+
+            if (GUILayout.Button("Escribir textos"))
+            {
+                Textos();
+            }
+
             //Imprime la lista
             EditorGUILayout.PropertyField(serializedObject.FindProperty("textos"));
-            serializedObject.ApplyModifiedProperties();
+            if (serializedObject.ApplyModifiedProperties())
+            {
+                Textos();
+            }
 
             EditorGUILayout.EndScrollView();
             EditorGUILayout.Space(10);
+
             #endregion
         }
         private void OnEnable()
         {
             serializedObject = new SerializedObject(this);
+            Actualizar();
+            Textos();
+
+            //Detecta cuando entras en el playmode
+            #region play
+            EditorApplication.playModeStateChanged += (PlayModeStateChange state) => {
+                if (state == PlayModeStateChange.ExitingEditMode) {
+                    play = true;
+                }
+            };
 
             if (play)
             {
@@ -120,13 +139,6 @@ namespace BaboOnLite
                 //Asignar variables
                 lenguajes = lenguajesLocal;
             }
-
-
-            //Detecta cuando entras en el playmode
-            #region play
-            EditorApplication.playModeStateChanged += (PlayModeStateChange state) => {
-                if (state == PlayModeStateChange.ExitingEditMode) play = true;
-            };
             #endregion
         }
 
@@ -205,6 +217,30 @@ namespace BaboOnLite
 
             //Pasa al estatico
             lenguajes = lenguajesLocal;
+
+            //Escribir los textos
+            Textos();
+            #endregion
+        }
+
+        private void Textos() {
+            #region aplicar textos
+            textos.ForEach((index, textMesh) => {
+                textMesh.Log();
+                if (textMesh != null && index != null)
+                {
+                    if (int.TryParse(index, out int i))
+                    {
+                        //Int
+                        textMesh.text = lenguajesLocal[Save.Data.lenguaje].dictionary[i];
+                    }
+                    else
+                    {
+                        //String
+                    }
+                }
+            });
+            EditorApplication.QueuePlayerLoopUpdate();
             #endregion
         }
     }
