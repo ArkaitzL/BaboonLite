@@ -1,6 +1,7 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace BaboOnLite
@@ -12,13 +13,18 @@ namespace BaboOnLite
         //Publicas
         [SerializeField] private DictionaryBG<AudioClip> sonidosLocal = new();
         [SerializeField] private DictionaryBG<AudioClip> musicaLocal = new();
+        [SerializeField] private AutoPlay[] autoPlay;
 
         //Estaticas
         [SerializeField] private static DictionaryBG<AudioClip> sonidos = new();
         [SerializeField] private static DictionaryBG<AudioClip> musica = new();
+        private static List<SonidosCreados> musicaCreada = new();
+        private static List<SonidosCreados> sonidoCreado = new();
+
+        private static Transform padre;
 
         //Privadas
-        private bool autoPlay, play;
+        private bool play, autoPlayActivo;
         private Vector2 scroll = Vector2.zero;
         private SerializedObject serializedObject;
 
@@ -53,38 +59,29 @@ namespace BaboOnLite
 
             EditorGUILayout.Space(10);
 
-            GUILayout.Label("Sonidos: ", EditorStyles.boldLabel);
-            sonido["sonidos"].estado = EditorGUILayout.Toggle("Activo: ", sonido["sonidos"].estado);
-            sonido["sonidos"].volumen = EditorGUILayout.IntSlider("Volumen: ", sonido["sonidos"].volumen, 0, 100);
+            Volumen("Musica", musicaCreada);
 
             EditorGUILayout.Space(10);
 
-            GUILayout.Label("Musica: ", EditorStyles.boldLabel);
-            sonido["musica"].estado = EditorGUILayout.Toggle("Activo: ", sonido["musica"].estado);
-            sonido["musica"].volumen = EditorGUILayout.IntSlider("Volumen: ", sonido["musica"].volumen, 0, 100);
+            Volumen("Sonidos", sonidoCreado);
 
             EditorGUILayout.Space(10);
+
             #endregion
 
             Separador();
             EditorGUILayout.Space(10);
 
             //Lista de musicas
-            #region sonidos
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("sonidosLocal"));
-            if (serializedObject.ApplyModifiedProperties())
-            {
-                sonidos = sonidosLocal;
-            }
-            EditorGUILayout.Space(10);
-            #endregion
-
-            Separador();
-
-            //Lista de sonidos
             #region musica
             EditorGUILayout.Space(10);
-            autoPlay = EditorGUILayout.Toggle("Reproductor automatico: ", autoPlay);
+
+            autoPlayActivo = EditorGUILayout.Toggle("Reproductor automatico: ", autoPlayActivo);
+            if (autoPlayActivo)
+            {
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("autoPlay"));
+                serializedObject.ApplyModifiedProperties();
+            }
 
             EditorGUILayout.Space(10);
 
@@ -93,6 +90,18 @@ namespace BaboOnLite
             {
                 musica = musicaLocal;
             }
+            #endregion
+
+            Separador();
+
+            //Lista de sonidos
+            #region sonidos
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("sonidosLocal"));
+            if (serializedObject.ApplyModifiedProperties())
+            {
+                sonidos = sonidosLocal;
+            }
+            EditorGUILayout.Space(10);
             #endregion
 
             EditorGUILayout.EndScrollView();
@@ -111,6 +120,25 @@ namespace BaboOnLite
                 {
                     play = true;
                 }
+                if (state == PlayModeStateChange.ExitingPlayMode)
+                {
+                    sonidoCreado = sonidoCreado.Filter((elemento) => elemento.inmortal);
+                    musicaCreada = musicaCreada.Filter((elemento) => elemento.inmortal);
+                }
+                if (state == PlayModeStateChange.EnteredPlayMode)
+                {
+                    //Reproduce automaticamente la musica
+                    if (autoPlayActivo)
+                    {
+                        foreach (var musica in autoPlay)
+                        {
+                            if (EditorSceneManager.GetActiveScene().path == AssetDatabase.GetAssetPath(musica.escena))
+                            {
+                                GetMusica(musica.musica, false, true);
+                            }
+                        }
+                    }
+                }
             };
 
             if (play)
@@ -118,8 +146,6 @@ namespace BaboOnLite
                 //Asigna las variables
                 sonidos = sonidosLocal;
                 musica = musicaLocal;
-
-                //Reproduce automaticamente la musica
             }
             #endregion
         }
@@ -162,19 +188,25 @@ namespace BaboOnLite
         }
         public static AudioSource GetSonido(string nombre, bool inmortal = false, bool bucle = false)
         {
-            if (Save.Data.sonido["sonidos"].estado)
+            int volumen = Save.Data.sonido["sonidos"].volumen;
+            if (!Save.Data.sonido["sonidos"].estado)
             {
-                return Creador(sonidos, nombre, Save.Data.sonido["sonidos"].volumen, inmortal, bucle);
+                volumen = 0;
             }
-            return new();
+            AudioSource audio = Creador(sonidos, nombre, volumen, inmortal, bucle);
+            sonidoCreado.Add(new(audio, inmortal));
+            return audio;
         }
         public static AudioSource GetMusica(string nombre, bool inmortal = false, bool bucle = false)
         {
-            if (Save.Data.sonido["musica"].estado)
+            int volumen = Save.Data.sonido["musica"].volumen;
+            if (!Save.Data.sonido["musica"].estado)
             {
-                return Creador(musica, nombre, Save.Data.sonido["musica"].volumen, inmortal, bucle);
+                volumen = 0;
             }
-            return new();
+            AudioSource audio = Creador(musica, nombre, volumen, inmortal, bucle);
+            musicaCreada.Add(new(audio, inmortal));
+            return audio;
         }
         private static AudioSource Creador(DictionaryBG<AudioClip> lista, string nombre, int volumen, bool inmortal, bool bucle)
         {
@@ -185,16 +217,22 @@ namespace BaboOnLite
                 Bug.LogLite($"[BL][Sonidos: 3] No existe el sonido {nombre} dentro de Sounds");
                 return null;
             }
+            //Crea un contenedor padre
+            if (padre == null)
+            {
+                padre = new GameObject($"Sonidos").transform;
+                padre.position = Vector3.zero;
+            }
 
             //Instancia el audio
-            GameObject instancia = new GameObject($"Sound-{nombre}");
+            GameObject instancia = new GameObject($"Sonido-{nombre}");
             instancia.transform.position = Vector3.zero;
-            //instancia.transform.SetParent(padre);
+            instancia.transform.SetParent(padre);
 
             //Crea el audioi source
             AudioSource audioSource = instancia.AddComponent<AudioSource>();
             audioSource.clip = lista.Get(nombre);
-            audioSource.volume = ((float)volumen / 100).Log() ;
+            audioSource.volume = ((float)volumen / 100);
 
             //Le da la inmortalidad entre escena
             if (inmortal) DontDestroyOnLoad(instancia);
@@ -211,6 +249,37 @@ namespace BaboOnLite
 
         //Metodos para añadir diseños al gui
         #region gui diseño
+
+        private void Volumen(string nombre, List<SonidosCreados> lista) 
+        {
+            GUILayout.Label(nombre, EditorStyles.boldLabel);
+            nombre = nombre.ToLower();
+
+            bool estado = sonido[nombre].estado;
+            int volumen = sonido[nombre].volumen;
+
+            sonido[nombre].estado = EditorGUILayout.Toggle("Activo: ", sonido[nombre].estado);
+            sonido[nombre].volumen = EditorGUILayout.IntSlider("Volumen: ", sonido[nombre].volumen, 0, 100);
+
+            //Comprueba si los valores se han modificado
+            if (estado != sonido[nombre].estado)
+            {
+                foreach (var elemento in lista)
+                {
+                    //Se mutea o desmutea
+                    elemento.sonido.volume = (!sonido[nombre].estado)
+                    ? 0
+                    : ((float)sonido[nombre].volumen / 100);
+                }
+            }
+            if (volumen != sonido[nombre].volumen)
+            {
+                foreach (var elemento in lista) 
+                {
+                    elemento.sonido.volume = ((float)sonido[nombre].volumen / 100);
+                }
+            }
+        }
         private void Separador(int altura = 1)
         {
             Rect rect = EditorGUILayout.GetControlRect(false, altura);

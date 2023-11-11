@@ -10,7 +10,7 @@ public class Pruebas : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Sonidos.GetMusica("musica1");
+            Sonidos.GetMusica("musica2", false, true);
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
