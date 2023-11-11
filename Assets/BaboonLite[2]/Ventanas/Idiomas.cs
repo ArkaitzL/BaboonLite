@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using TMPro;
 
-namespace BaboOnLite
-{
+namespace BaboOnLite {
     public class Idiomas : EditorWindow
     {
         //VARIABLES 
@@ -23,8 +21,8 @@ namespace BaboOnLite
 
         //Privadas
         private SerializedObject serializedObject;
-        private Vector2 scroll1 = Vector2.zero;
-        private List<string> listas = new();
+        private Vector2 scroll = Vector2.zero;
+        private List<List<string>> listas = new();
         private bool play;
 
         [MenuItem("Window/BaboOnLite/Idiomas")]
@@ -40,7 +38,6 @@ namespace BaboOnLite
 
         private void OnGUI()
         {
-
             //Crea la GUI basica de la ventana
 
             //Inicio del GUI
@@ -52,7 +49,7 @@ namespace BaboOnLite
 
             int actualAnterior = actualLocal;
 
-            actualLocal = EditorGUILayout.IntSlider("Valor Entero", actualLocal, 0, lenguajesLocal.Count-1);
+            actualLocal = EditorGUILayout.IntSlider("Idioma actual: ", actualLocal, 0, lenguajesLocal.Count-1);
 
             if (actualAnterior != actualLocal)
             {
@@ -86,11 +83,16 @@ namespace BaboOnLite
             GUILayout.Label("Mis diccionarios:", EditorStyles.boldLabel);
             EditorGUILayout.Space(5);
 
-            scroll1 = EditorGUILayout.BeginScrollView(scroll1);
+            scroll = EditorGUILayout.BeginScrollView(scroll);
 
-            foreach (var texto in listas)
+            foreach (var lista in listas)
             {
-                EditorGUILayout.LabelField(texto);
+                EditorGUILayout.BeginVertical("box");
+                foreach (var texto in lista)
+                {
+                    EditorGUILayout.LabelField(texto);
+                }
+                EditorGUILayout.EndVertical();
             }
 
             EditorGUILayout.EndScrollView();
@@ -99,6 +101,7 @@ namespace BaboOnLite
         }
         private void OnEnable()
         {
+            //Declarar el serializedObject y Actualizar las listas
             serializedObject = new SerializedObject(this);
             Actualizar();
 
@@ -181,15 +184,9 @@ namespace BaboOnLite
 
         //PRIVADAS
 
-        private void Separador(int altura = 1)
-        {
-            Rect rect = EditorGUILayout.GetControlRect(false, altura);
-            rect.height = altura;
-            EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
-        }
-
+        //Actualizar la lista de los lenguajes
+        #region actualizar lenguajes
         private void Actualizar() {
-            #region actualizar lista de lenguajes
 
             if (lenguajesLocal.Count == 0) listas.Clear();
 
@@ -213,18 +210,30 @@ namespace BaboOnLite
             //Guarda los diccionarios ordenados
             for (int i = 0; i < comparacion; i++)
             {
-                listas.Add($"Palabra ->  {i}:");
+                List<string> lista = new(); 
+                lista.Add($"Palabra ->  {i}:");
 
                 for (int j = 0; j < lenguajesLocal.Count; j++)
                 {
-                    listas.Add($"\t •  {lenguajesLocal[j].name}: " + lenguajesLocal[j].dictionary[i]);
+                    lista.Add($"\t •  {lenguajesLocal[j].name}: " + lenguajesLocal[j].dictionary[i]);
                 }
-                //listas.Add("\n");
+
+                listas.Add(lista);
             }
 
             //Pasa al estatico
             lenguajes = lenguajesLocal;
-            #endregion
         }
+        #endregion
+
+        //Metodos para añadir diseños al gui
+        #region gui diseño
+        private void Separador(int altura = 1)
+        {
+            Rect rect = EditorGUILayout.GetControlRect(false, altura);
+            rect.height = altura;
+            EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
+        }
+        #endregion
     }
 }

@@ -9,6 +9,10 @@ namespace BaboOnLite
         //Variables por defecto: Estas varibles se usan automaticamente   //
         //----------------------------------------------------------------//
         public int lenguaje = 0;
-        public bool muteado = false;
+        public Dictionary<string, Sonido> sonido = new(){
+            { "vibracion", new() },
+            { "musica", new() },
+            { "sonidos", new() },
+        };
     }
 }

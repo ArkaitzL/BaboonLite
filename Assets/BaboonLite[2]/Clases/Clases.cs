@@ -64,6 +64,16 @@ namespace BaboOnLite
     }
     #endregion
 
+    //Clases que se usan en la ventana de SONIDOS
+    #region sonidos
+    [Serializable]
+    public class Sonido
+    {
+        public bool estado = true;
+        public int volumen = 100;
+    }
+    #endregion
+
     //DICCIONARIO 
     #region diccionario
     [Serializable]

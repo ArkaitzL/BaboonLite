@@ -3,11 +3,9 @@ using UnityEditor;
 using UnityEngine;
 
 namespace BaboOnLite {
-
-
     public class Save : EditorWindow
     {
-        //Variables
+        //VARIABLES
         [SerializeField] private bool mensajes;
 
         public static event Action actualizar;
@@ -52,6 +50,8 @@ namespace BaboOnLite {
             EditorGUILayout.Space(10);
             mensajes = EditorGUILayout.Toggle("Mostrar mensajes: ", mensajes);
             EditorGUILayout.Space(10);
+
+            Separador();
 
             //Eliminar data
             if (GUILayout.Button("Eliminar data"))
@@ -134,5 +134,15 @@ namespace BaboOnLite {
             dataLocal = data;
             Repaint();
         }
+
+        //Metodos para añadir diseños al gui
+        #region gui diseño
+        private void Separador(int altura = 1)
+        {
+            Rect rect = EditorGUILayout.GetControlRect(false, altura);
+            rect.height = altura;
+            EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
+        }
+        #endregion
     }
 }

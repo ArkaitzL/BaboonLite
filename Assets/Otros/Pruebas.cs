@@ -10,15 +10,11 @@ public class Pruebas : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Idiomas.Alternar();
+            Sonidos.GetMusica("musica1");
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
-            Idiomas.Cambiar(0);
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Debug.Log(Idiomas.Get("Bye"));
+            Sonidos.GetSonido("sonido1");
         }
     }
 }
