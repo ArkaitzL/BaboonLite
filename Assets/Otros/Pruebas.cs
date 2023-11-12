@@ -18,4 +18,10 @@ public class Pruebas : MonoBehaviour
             Sonidos.GetSonido("sonido1");
         }
     }
+
+    public void AnuncioRecompensado() {
+        Anuncios.verRewarded(() => {
+            Debug.Log("Toma tu piruleta");
+        });
+    }
 }

@@ -1,5 +1,6 @@
 using UnityEngine.Advertisements;
 using UnityEngine;
+using System;
 
 namespace BaboOnLite {
 
@@ -9,22 +10,45 @@ namespace BaboOnLite {
     [HelpURL("https://docs.google.com/document/d/1zPv7QP-ZyisadG5zREiMmzV7UWsYTUPZIPT0f_YlhSE/edit?usp=sharing")]
     public class Anuncios : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
     {
-        [SerializeField] private string androidAdID = "Interstitial_Android";
-        [SerializeField] private string iosAdID = "Interstitial_iOS";
-        private string adId;
+        //PUBLICAS
+        [Header("Interstitial")]
+        [SerializeField] private string androidInterstitial = "Interstitial_Android";
+        [SerializeField] private string iosInterstitial = "Interstitial_iOS";
+        [Header("Rewarded")]
+        [SerializeField] private string androidRewarded = "Rewarded_Android";
+        [SerializeField] private string iosRewarded = "Rewarded_iOS";
+        //ESTATICAS
+        public static Action<Action> verRewarded;
+        public static Action verInterstitial;
+        //PRIVADAS
+        private Action recompensa = null;
+        private string rewarded, interstitial;
 
         //Asigna el id correspondiente
         private void Awake()
         {
+            //Declaar los delegados
+            verInterstitial = VerInterstitial;
+            verRewarded = VerRewarded;
+
             //Asigna el id correspondiente
-            adId = (Application.platform == RuntimePlatform.IPhonePlayer)
-                ? iosAdID
-                : androidAdID;
+            interstitial = (Application.platform == RuntimePlatform.IPhonePlayer)
+                ? iosInterstitial
+                : androidInterstitial;
+            rewarded = (Application.platform == RuntimePlatform.IPhonePlayer)
+                ? iosRewarded
+                : androidRewarded;
         }
 
         //Enseña el anuncio que quieres ver
-        public void VerAd() {
-            Advertisement.Load(adId, this);
+        public void VerInterstitial()
+        {
+            Advertisement.Load(interstitial, this);
+        }
+        public void VerRewarded(Action recompensa = null)
+        {
+            this.recompensa = recompensa;
+            Advertisement.Load(rewarded, this);
         }
 
         //FUNCIONES DE UNITYADS
@@ -40,10 +64,7 @@ namespace BaboOnLite {
                 return;
             }
 
-            if (adUnitId.Equals(adId))
-            {
-                Advertisement.Show(adId, this);
-            }
+            Advertisement.Show(adUnitId, this);
         }
         #endregion
 
@@ -66,7 +87,10 @@ namespace BaboOnLite {
         // Se llama cuando el usuario hace clic en el anuncio
         public void OnUnityAdsShowClick(string _adUnitId) { }
         // Se llama cuando se completa la reproducción del anuncio
-        public void OnUnityAdsShowComplete(string _adUnitId, UnityAdsShowCompletionState showCompletionState) { }
+        public void OnUnityAdsShowComplete(string _adUnitId, UnityAdsShowCompletionState showCompletionState) {
+            recompensa?.Invoke();
+            recompensa = null;
+        }
         #endregion
     }
 
