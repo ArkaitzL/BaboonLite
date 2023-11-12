@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Pruebas : MonoBehaviour
 {
+    [SerializeField] DictionaryBG<bool> prueba;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))

@@ -154,10 +154,20 @@ namespace BaboOnLite
         #region sonidos volumen/estado
         public static void Estado(string nombre, bool estado)
         {
+            if (!sonidos.Inside(nombre))
+            {
+                Bug.LogLite($"[BL][Sonidos: 4] No existe ningun elemento con el nombre {nombre}. Elija: musica, sonidos o vibracion");
+                return;
+            }
             Save.Data.sonido[nombre].estado = estado;
         }
         public static void Volumen(string nombre, int volumen)
         {
+            if (!sonidos.Inside(nombre))
+            {
+                Bug.LogLite($"[BL][Sonidos: 4] No existe ningun elemento con el nombre {nombre}. Elija: musica o sonidos");
+                return;
+            }
             if (volumen < 0)
             {
                 volumen = 0;
