@@ -8,8 +8,7 @@ namespace BaboOnLite {
     public class Prefabs
     {
         //Ruta de la carpeta prefab dentro de BaboonLite
-        private static string ruta_carpeta = "/Prefabs/";
-
+        private static string ruta_carpeta = "/";
 
         //CANVA 1
         [MenuItem("GameObject/UI/BaboOnLite/Canvas")]
@@ -33,7 +32,7 @@ namespace BaboOnLite {
             {
                 //Busca la ruta
                 string ruta = AssetDatabase.GUIDToAssetPath(
-                    AssetDatabase.FindAssets("Editor")[0]
+                    AssetDatabase.FindAssets("Prefabs")[0]
                 ) + ruta_carpeta;
 
                 //Lo crea
@@ -60,8 +59,8 @@ namespace BaboOnLite {
             //VARIABLES
             Dictionary<string, string> nombres = new Dictionary<string, string>
             {
-                { "canvas", "canvas-" },
-                { "eventsystem", "es-" },
+                { "canvas", "Canvas-" },
+                { "eventsystem", "Es-" },
             };
 
             //Busca el canvas y si no existe lo crea
