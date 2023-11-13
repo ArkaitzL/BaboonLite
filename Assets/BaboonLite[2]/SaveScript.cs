@@ -8,11 +8,13 @@ namespace BaboOnLite
         //----------------------------------------------------------------//
         //Variables por defecto: Estas varibles se usan automaticamente   //
         //----------------------------------------------------------------//
-        public int lenguaje = 0;
-        public Dictionary<string, Sonido> sonido = new(){
+        public int lenguaje = 0; // Lenguaje
+        public Dictionary<string, Sonido> sonido = new(){ //Sonidos
             { "vibracion", new() },
             { "musica", new() },
             { "sonidos", new() },
         };
+        //Skins
+        public int dinero = 0, miSkin = 0;
     }
 }

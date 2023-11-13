@@ -7,6 +7,10 @@ using UnityEngine.SceneManagement;
 public class Pruebas : MonoBehaviour
 {
     [SerializeField] DictionaryBG<bool> prueba;
+
+    private void Start()
+    {
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))

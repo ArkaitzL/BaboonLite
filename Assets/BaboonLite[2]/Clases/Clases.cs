@@ -92,6 +92,17 @@ namespace BaboOnLite
     }
     #endregion
 
+    //Clases que se usan en el componenete SKINS
+    #region skins
+    [Serializable]
+    public class Skin {
+        public int id;
+        public Sprite imagen;
+        public int precio;
+        public bool desbloqueado;
+    }
+    #endregion
+
     //DICCIONARIO 
     #region diccionario
     [Serializable]

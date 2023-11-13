@@ -37,7 +37,7 @@ namespace BaboOnLite
         #region mensajes
         public void OnInitializationComplete()
         {
-            Debug.Log("Anuncios cargados.");
+            //Debug.Log("Anuncios cargados.");
         }
 
         public void OnInitializationFailed(UnityAdsInitializationError error, string mensaje)
