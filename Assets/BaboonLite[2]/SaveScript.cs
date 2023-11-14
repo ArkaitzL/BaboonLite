@@ -15,6 +15,8 @@ namespace BaboOnLite
             { "sonidos", new() },
         };
         //Skins
-        public int dinero = 0, miSkin = 0;
+        public int dinero = 0;
+        public List<int> listaSkin = new();
+        public miSkin2D miSkin2D; //Skin2D
     }
 }

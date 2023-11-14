@@ -10,6 +10,7 @@ public class Pruebas : MonoBehaviour
 
     private void Start()
     {
+        Save.Data.dinero += 200;
     }
     void Update()
     {

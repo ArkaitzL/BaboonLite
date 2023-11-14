@@ -10,17 +10,23 @@ namespace BaboOnLite {
         //Ruta de la carpeta prefab dentro de BaboonLite
         private static string ruta_carpeta = "/";
 
-        //CANVA 1
+        //CANVAS
         [MenuItem("GameObject/UI/BaboOnLite/Canvas")]
         private static void InstanciarCanva(MenuCommand menuCommand)
         {
             ElementoCanvas(null);
         }
-        //CANVA 2
+        //FPS
         [MenuItem("GameObject/UI/BaboOnLite/Fps (Android)")]
         private static void InstanciarFps(MenuCommand menuCommand)
         {
             ElementoCanvas("Fps/Fps.prefab");
+        }
+        //SKINS2D
+        [MenuItem("GameObject/UI/BaboOnLite/Skin (2D)")]
+        private static void InstanciarSkin2D(MenuCommand menuCommand)
+        {
+            ElementoCanvas("Menus/Skin2D/Skins2D.prefab");
         }
 
         private static GameObject Elemento(string nombre) 

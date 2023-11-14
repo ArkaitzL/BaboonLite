@@ -93,13 +93,30 @@ namespace BaboOnLite
     #endregion
 
     //Clases que se usan en el componenete SKINS
-    #region skins
+    #region skins2D
     [Serializable]
-    public class Skin {
+    public class Skin2D {
         public int id;
         public Sprite imagen;
         public int precio;
         public bool desbloqueado;
+    }
+    [Serializable]
+    public class Skin2DColores
+    {
+        public Color32 fondo, botonSalir, bloqueo, textos, seleccionado;
+        public Tarjeta tarjeta;
+
+        [Serializable]
+        public class Tarjeta {
+            public Color32 fondoSkin, fondoPrecio;
+        }
+    }
+    [Serializable]
+    public class miSkin2D
+    {
+        public int id;
+        public Sprite imagen;
     }
     #endregion
 
