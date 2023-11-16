@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace BaboOnLite
 {
@@ -24,7 +25,8 @@ namespace BaboOnLite
         private static Transform padre;
 
         //Privadas
-        private bool play, autoPlayActivo;
+        private bool play, autoPlayActivo, botones;
+        private string botonSonido;
         private Vector2 scroll = Vector2.zero;
         private SerializedObject serializedObject;
 
@@ -70,7 +72,6 @@ namespace BaboOnLite
             #endregion
 
             Separador();
-            EditorGUILayout.Space(10);
 
             //Lista de musicas
             #region musica
@@ -90,12 +91,26 @@ namespace BaboOnLite
             {
                 musica = musicaLocal;
             }
+
+            EditorGUILayout.Space(10);
             #endregion
 
             Separador();
 
             //Lista de sonidos
             #region sonidos
+
+            //Sonido de botones
+            EditorGUILayout.Space(10);
+
+            botones = EditorGUILayout.Toggle("Sonido en botones: ", botones);
+            if (botones)
+            {
+                botonSonido = GUILayout.TextField(botonSonido);
+            }
+
+            EditorGUILayout.Space(10);
+
             EditorGUILayout.PropertyField(serializedObject.FindProperty("sonidosLocal"));
             if (serializedObject.ApplyModifiedProperties())
             {
@@ -138,6 +153,16 @@ namespace BaboOnLite
                             }
                         }
                     }
+                    //Asigna a los botones sonidos
+                    if (botones)
+                    {
+                        Button[] botones = FindObjectsOfType<Button>(includeInactive: true);
+                        foreach (Button boton in botones)
+                        {
+                            Debug.Log("aaaaa");
+                            boton.onClick.AddListener(() => { Debug.Log("bbbbb"); GetSonido(botonSonido); });
+                        }
+                    }
                 }
             };
 
@@ -145,7 +170,7 @@ namespace BaboOnLite
             {
                 //Asigna las variables
                 sonidos = sonidosLocal;
-                musica = musicaLocal;
+                musica = musicaLocal;         
             }
             #endregion
         }

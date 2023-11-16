@@ -10,26 +10,7 @@ namespace BaboOnLite {
         //Ruta de la carpeta prefab dentro de BaboonLite
         private static string ruta_carpeta = "/";
 
-        //CANVAS
-        [MenuItem("GameObject/UI/BaboOnLite/Canvas")]
-        private static void InstanciarCanva(MenuCommand menuCommand)
-        {
-            ElementoCanvas(null);
-        }
-        //FPS
-        [MenuItem("GameObject/UI/BaboOnLite/Fps (Android)")]
-        private static void InstanciarFps(MenuCommand menuCommand)
-        {
-            ElementoCanvas("Fps/Fps.prefab");
-        }
-        //SKINS2D
-        [MenuItem("GameObject/UI/BaboOnLite/Skin (2D)")]
-        private static void InstanciarSkin2D(MenuCommand menuCommand)
-        {
-            ElementoCanvas("Menus/Skin2D/Skins2D.prefab");
-        }
-
-        private static GameObject Elemento(string nombre) 
+        public static GameObject Elemento(string nombre) 
         {
             //Instancia el elemento del prefab
             #region elemento
@@ -40,6 +21,8 @@ namespace BaboOnLite {
                 string ruta = AssetDatabase.GUIDToAssetPath(
                     AssetDatabase.FindAssets("Prefabs")[0]
                 ) + ruta_carpeta;
+
+                ruta.Log();
 
                 //Lo crea
                 GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(ruta + nombre);
@@ -60,7 +43,7 @@ namespace BaboOnLite {
             return elemento;
         }
 
-        private static void ElementoCanvas(string nombre)
+        public static void ElementoCanvas(string nombre)
         {
             //VARIABLES
             Dictionary<string, string> nombres = new Dictionary<string, string>
