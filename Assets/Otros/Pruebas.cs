@@ -7,10 +7,13 @@ using UnityEngine.SceneManagement;
 public class Pruebas : MonoBehaviour
 {
     [SerializeField] DictionaryBG<bool> prueba;
+    [SerializeField] Transform padreTra;
+    [SerializeField] GameObject padreGa;
 
     private void Start()
     {
-        Save.Data.dinero += 200;
+        padreTra.GetChilds(0, 0, 0).name.Log();
+        padreGa.GetChilds(0, 0, 0).name.Log();
     }
     void Update()
     {

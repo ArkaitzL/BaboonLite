@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace BaboOnLite 
+namespace BaboOnLite
 {
     public static class ArrayFun
     {
@@ -205,7 +205,7 @@ namespace BaboOnLite
 
         //Te permite modificar unicamente el valor X, Y o Z de un Vector3
         #region transform
-        public static Vector3 Y(this Vector3 trans, float num) 
+        public static Vector3 Y(this Vector3 trans, float num)
         {
             return new Vector3(trans.x, trans.y + num, trans.z);
         }
@@ -235,6 +235,26 @@ namespace BaboOnLite
         {
             num = trans.eulerAngles.z.EquacionLimitada(num, 360);
             return Quaternion.Euler(trans.eulerAngles.x, trans.eulerAngles.y, num);
+        }
+        #endregion
+    }
+
+    public static class Hijos {
+
+        //te permite coger los hijo de los hijos...
+        #region get childs
+        public static Transform GetChilds(this Transform elemento, params int[] hijos) => Childs(elemento, hijos);
+        public static Transform GetChilds(this GameObject elemento, params int[] hijos) => Childs(elemento.transform, hijos);
+        private static Transform Childs(Transform elemento, int[] hijos)
+        {
+            Transform resultado = elemento;
+
+            foreach (int hijo in hijos)
+            {
+                resultado = resultado.GetChild(hijo);
+            }
+
+            return resultado;
         }
         #endregion
     }

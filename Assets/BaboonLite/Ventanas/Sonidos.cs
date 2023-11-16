@@ -159,8 +159,7 @@ namespace BaboOnLite
                         Button[] botones = FindObjectsOfType<Button>(includeInactive: true);
                         foreach (Button boton in botones)
                         {
-                            Debug.Log("aaaaa");
-                            boton.onClick.AddListener(() => { Debug.Log("bbbbb"); GetSonido(botonSonido); });
+                            boton.onClick.AddListener(() => { GetSonido(botonSonido); });
                         }
                     }
                 }
