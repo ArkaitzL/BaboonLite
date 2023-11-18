@@ -18,11 +18,11 @@ namespace BaboOnLite
         private void Awake()
         {
             #if UNITY_IOS
-                _gameId = iosID;
+                gameID = iosID;
             #elif UNITY_ANDROID
                 gameID = androidID;
             #elif UNITY_EDITOR
-                _gameId = _androidGameId;
+                gameId = androidID;
             #endif
 
             if (!Advertisement.isInitialized && Advertisement.isSupported)
