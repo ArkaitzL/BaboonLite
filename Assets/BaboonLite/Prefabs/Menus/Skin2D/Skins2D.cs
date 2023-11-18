@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace BaboOnLite {
 
     [DefaultExecutionOrder(1)]
-    [AddComponentMenu("BaboOnLite/_Menus/Skins2D")]
+    //[AddComponentMenu("BaboOnLite/_Menus/Skins2D")]
     [DisallowMultipleComponent]
     [HelpURL("https://docs.google.com/document/d/1zPv7QP-ZyisadG5zREiMmzV7UWsYTUPZIPT0f_YlhSE/edit?usp=sharing")]
     public class Skins2D : MonoBehaviour

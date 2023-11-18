@@ -27,7 +27,7 @@ namespace BaboOnLite {
         //Asigna el id correspondiente
         private void Awake()
         {
-            //Declaar los delegados
+            //Declara los delegados
             verInterstitial = VerInterstitial;
             verRewarded = VerRewarded;
 
@@ -45,7 +45,11 @@ namespace BaboOnLite {
         {
             Advertisement.Load(interstitial, this);
         }
-        public void VerRewarded(Action recompensa = null)
+        public void VerRewarded()
+        {
+            Advertisement.Load(rewarded, this);
+        }
+        public void VerRewarded(Action recompensa)
         {
             this.recompensa = recompensa;
             Advertisement.Load(rewarded, this);

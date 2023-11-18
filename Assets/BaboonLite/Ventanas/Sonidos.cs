@@ -150,6 +150,7 @@ namespace BaboOnLite
                             if (EditorSceneManager.GetActiveScene().path == AssetDatabase.GetAssetPath(musica.escena))
                             {
                                 GetMusica(musica.musica, false, true);
+                                return;
                             }
                         }
                     }

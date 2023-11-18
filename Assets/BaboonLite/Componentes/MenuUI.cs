@@ -17,7 +17,8 @@ namespace BaboOnLite
         [Header("General")]
         [SerializeField] bool activarTiempo = true;
         [Header("Botones")]
-        [SerializeField] KeyCode[] reiniciar = { KeyCode.R }, pausar = { KeyCode.P };
+        [SerializeField] KeyCode[] reiniciar = { KeyCode.R };
+        [SerializeField] KeyCode[] pausar = { KeyCode.P };
 
         //FUNCIONES PRIVADAS
 

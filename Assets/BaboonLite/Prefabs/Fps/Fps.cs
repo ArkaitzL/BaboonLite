@@ -6,9 +6,9 @@ using System.Linq;
 namespace BaboOnLite 
 {
     [DefaultExecutionOrder(0)]
-    [AddComponentMenu("BaboOnLite/Fps")]
+    //[AddComponentMenu("BaboOnLite/Fps")]
     [DisallowMultipleComponent]
-    //[HelpURL("")]
+    [HelpURL("https://docs.google.com/document/d/1zPv7QP-ZyisadG5zREiMmzV7UWsYTUPZIPT0f_YlhSE/edit?usp=sharing")]
 
     public partial class Fps {
         [SerializeField] private TextMeshProUGUI fpsText;
