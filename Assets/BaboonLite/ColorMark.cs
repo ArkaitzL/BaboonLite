@@ -12,6 +12,7 @@ namespace BaboOnLite
             ("-", Color.black),
             ("$", Color.cyan),
             ("_", Color.white),
+            ("|", Color.green),
         };
     }
 }

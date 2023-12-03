@@ -217,6 +217,14 @@ namespace BaboOnLite
         {
             return new Vector3(trans.x, trans.y, trans.z + num);
         }
+        public static Vector2 Y(this Vector2 trans, float num)
+        {
+            return new Vector2(trans.x, trans.y + num);
+        }
+        public static Vector2 X(this Vector2 trans, float num)
+        {
+            return new Vector2(trans.x + num, trans.y);
+        }
         #endregion
 
         //Te permite modificar unicamente el valor X, Y o Z de un Quaternion

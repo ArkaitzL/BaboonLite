@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace BaboOnLite
@@ -74,13 +73,8 @@ namespace BaboOnLite
         public int volumen = 100;
     }
     [Serializable]
-    public class AutoPlay
+    public class SonidosCreados
     {
-        public string musica = "";
-        public SceneAsset escena;
-    }
-    [Serializable]
-    public class SonidosCreados {
         public AudioSource sonido;
         public bool inmortal;
 
@@ -89,6 +83,12 @@ namespace BaboOnLite
             this.sonido = sonido;
             this.inmortal = inmortal;
         }
+    }
+    public enum TipoSonido
+    {
+        vibracion,
+        musica,
+        sonidos
     }
     #endregion
 

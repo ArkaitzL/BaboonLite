@@ -7,7 +7,7 @@ namespace BaboOnLite {
     [DefaultExecutionOrder(1)]
     [AddComponentMenu("BaboOnLite/_ADS/Anuncios")]
     [DisallowMultipleComponent]
-    [HelpURL("https://docs.google.com/document/d/1zPv7QP-ZyisadG5zREiMmzV7UWsYTUPZIPT0f_YlhSE/edit?usp=sharing")]
+    [HelpURL("https://www.notion.so/BaboOnLite-c6252ac92bbc4f8ea231b1276008c13a?pvs=4")]
     public class Anuncios : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
     {
         //PUBLICAS
@@ -18,8 +18,10 @@ namespace BaboOnLite {
         [SerializeField] private string androidRewarded = "Rewarded_Android";
         [SerializeField] private string iosRewarded = "Rewarded_iOS";
         //ESTATICAS
-        public static Action<Action> verRewarded;
+        public static Action verRewarded;
         public static Action verInterstitial;
+        public static Action<Action> verRewardedRecompensa;
+        public static Action<Action> verInterstitialRecompensa;
         //PRIVADAS
         private Action recompensa = null;
         private string rewarded, interstitial;
@@ -30,6 +32,8 @@ namespace BaboOnLite {
             //Declara los delegados
             verInterstitial = VerInterstitial;
             verRewarded = VerRewarded;
+            verInterstitialRecompensa = VerInterstitial;
+            verRewardedRecompensa = VerRewarded;
 
             //Asigna el id correspondiente
             interstitial = (Application.platform == RuntimePlatform.IPhonePlayer)
@@ -43,6 +47,11 @@ namespace BaboOnLite {
         //Enseña el anuncio que quieres ver
         public void VerInterstitial()
         {
+            Advertisement.Load(interstitial, this);
+        }
+        public void VerInterstitial(Action recompensa)
+        {
+            this.recompensa = recompensa;
             Advertisement.Load(interstitial, this);
         }
         public void VerRewarded()
