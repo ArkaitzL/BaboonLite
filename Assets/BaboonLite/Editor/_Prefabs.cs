@@ -6,8 +6,9 @@ namespace BaboOnLite {
         //----------------------------------------------------------------//
         // En MenuItem añade: "GameObject/UI/BaboOnLite/" + "TuCarpeta"   //
         // En ElementoCanvas añade: "TuCarpeta/" + "TuPrefab.prefab"      //
+        // Añlade true en caso de que sea un elemento del canvas          //
         //----------------------------------------------------------------//
-        
+
         //CANVAS/
 
         //CANVAS
@@ -21,6 +22,21 @@ namespace BaboOnLite {
         private static void InstanciarFps(MenuCommand selecciondo)
         {
             Prefabs.Elemento("Fps/Fps.prefab", selecciondo, true);
+        }
+
+        //CANVAS/MENUS/
+
+        //DEV
+        [MenuItem("GameObject/UI/BaboOnLite/Menus/Dev")]
+        private static void InstanciarDev(MenuCommand selecciondo)
+        {
+            Prefabs.Elemento("Menus/Dev.prefab", selecciondo, true);
+        }
+        //INICIO
+        [MenuItem("GameObject/UI/BaboOnLite/Menus/Inicio")]
+        private static void InstanciarInicio(MenuCommand selecciondo)
+        {
+            Prefabs.Elemento("Menus/Inicio.prefab", selecciondo, true);
         }
 
         //BABOONLITE/
@@ -69,5 +85,6 @@ namespace BaboOnLite {
         {
             Prefabs.Elemento("Componentes/_textos.prefab", selecciondo);
         }
+
     }
 }

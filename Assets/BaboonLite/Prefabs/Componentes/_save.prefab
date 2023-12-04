@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2017834483557866879}
-  - component: {fileID: 7346369350550001830}
+  - component: {fileID: 845277267813345412}
   m_Layer: 0
   m_Name: _save
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7346369350550001830
+--- !u!114 &845277267813345412
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,12 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
-    dinero: 0
-    mejor_puntuacion: 0
-    iniciado: 0
-    muteado: 0
-    listaSkin: 
-    miSkin2D:
-      id: 0
-      imagen: {fileID: 0}
+    puntuacion: 0
+    lenguaje: 0
   mensajes: 0

@@ -6,5 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class Pruebas : MonoBehaviour
 {
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Idiomas.Alternar();
+        }
+    }
 }
