@@ -38,6 +38,18 @@ namespace BaboOnLite {
         {
             Prefabs.Elemento("Menus/Inicio.prefab", selecciondo, true);
         }
+        //MUERTE
+        [MenuItem("GameObject/UI/BaboOnLite/Menus/Muerte")]
+        private static void InstanciarMuerte(MenuCommand selecciondo)
+        {
+            Prefabs.Elemento("Menus/Muerte.prefab", selecciondo, true);
+        }
+        //AJUSTESMIN
+        [MenuItem("GameObject/UI/BaboOnLite/Menus/AjustesMin")]
+        private static void InstanciarAjustesMin(MenuCommand selecciondo)
+        {
+            Prefabs.Elemento("Menus/AjustesMin.prefab", selecciondo, true);
+        }
 
         //BABOONLITE/
 

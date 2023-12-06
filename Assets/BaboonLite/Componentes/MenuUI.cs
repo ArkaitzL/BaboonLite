@@ -115,7 +115,7 @@ namespace BaboOnLite
 
         //Te permite abrir una url
         #region url
-        public void AbrirURL(string url)
+        public static void AbrirURL(string url)
         {
             Application.OpenURL(url);
         }

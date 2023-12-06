@@ -63,6 +63,11 @@ namespace BaboOnLite
 
         //Metodos para cambiar el volumen y los estados
         #region sonidos volumen/estado
+        public static void AlternarEstado(TipoSonido tipo) 
+        {
+            Estado(tipo, !Save.Data.sonido[tipo.ToString()].estado);
+        }
+
         public static void Estado(TipoSonido tipo, bool estado)
         {
             //Lo cambia

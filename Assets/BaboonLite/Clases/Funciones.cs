@@ -191,7 +191,21 @@ namespace BaboOnLite
             {
                 variable -= limite + 1;
             }
-            if (variable < 0)
+            else if (variable < 0)
+            {
+                variable += limite + 1;
+            }
+
+            return variable;
+        }
+        public static int EquacionLimitada(this int variable, int valor, int limite)
+        {
+            variable += valor;
+            if (variable > limite)
+            {
+                variable -= limite + 1;
+            }
+            else if(variable < 0)
             {
                 variable += limite + 1;
             }
