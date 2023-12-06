@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class Pruebas : MonoBehaviour
 {
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Idiomas.Alternar();
+            Instanciar<MuerteBG>.Coger().Activar(new("Puntos", 100f, 0.1f), new("Dinero", 10f, 3f));
         }
     }
 }

@@ -7,6 +7,6 @@ public class InicioBG : MonoBehaviour
     [SerializeField] TextMeshProUGUI mejor_puntuacion;
     void Start()
     {
-        mejor_puntuacion.text = Save.Data.puntuacion.ToString("000");
+        mejor_puntuacion.text = Save.Data.mejor_puntuacion.ToString("000");
     }
 }

@@ -80,6 +80,7 @@ namespace BaboOnLite
         #region eliminar_datos
         public void Eliminar()
         {
+            data = new SaveScript();
             PlayerPrefs.DeleteKey("data");
             if (mensajes) Debug.Log("[BL]Datos eliminados correctamente de PlayerPrefs");
         }

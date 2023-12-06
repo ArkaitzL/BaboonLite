@@ -1,5 +1,43 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &460715303821493974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5982613453174600331}
+  m_Layer: 0
+  m_Name: Contenedor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5982613453174600331
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460715303821493974}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1241505197559043621}
+  - {fileID: 3786394913224301092}
+  - {fileID: 1260838621940331033}
+  m_Father: {fileID: 7529300700167981260}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1440561892981229578
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,6 +47,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7529300700167981260}
+  - component: {fileID: 8478372046255404635}
   m_Layer: 0
   m_Name: Muerte
   m_TagString: Untagged
@@ -28,9 +67,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1241505197559043621}
-  - {fileID: 3786394913224301092}
-  - {fileID: 1260838621940331033}
+  - {fileID: 5982613453174600331}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -38,6 +75,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8478372046255404635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440561892981229578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c6c78a558c120e47b6d11a7a882ec2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  muerte_txt: {fileID: 7369767991658957313}
+  menu_scene: Otro
 --- !u!1 &1899401630339148096
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,7 +125,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -454}
-  m_SizeDelta: {x: 400, y: 100}
+  m_SizeDelta: {x: 600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4781877607213065979
 CanvasRenderer:
@@ -106,8 +157,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: TOCA PARA CONTINUAR
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
-  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -390,14 +441,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Controlador, Assembly-CSharp
-        m_MethodName: Multiplicador
-        m_Mode: 1
+      - m_Target: {fileID: 8478372046255404635}
+        m_TargetAssemblyTypeName: MuerteBG, Assembly-CSharp
+        m_MethodName: Terminar
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -434,12 +485,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6734419802364249390}
-  m_Father: {fileID: 7529300700167981260}
+  m_Father: {fileID: 5982613453174600331}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.19000001, y: 0.47875002}
   m_AnchorMax: {x: 0.8112501, y: 0.8518749}
-  m_AnchoredPosition: {x: -0.5000305, y: -264.50003}
-  m_SizeDelta: {x: 303, y: 1003}
+  m_AnchoredPosition: {x: -0.06250572, y: -16.120605}
+  m_SizeDelta: {x: 737.87506, y: 1563.6143}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4497363183657568869
 CanvasRenderer:
@@ -523,10 +574,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Controlador, Assembly-CSharp
-        m_MethodName: Continuar
-        m_Mode: 1
+      - m_Target: {fileID: 8478372046255404635}
+        m_TargetAssemblyTypeName: MuerteBG, Assembly-CSharp
+        m_MethodName: Terminar
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -610,8 +661,8 @@ MonoBehaviour:
     Total                    
     82$'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
-  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -710,12 +761,12 @@ RectTransform:
   - {fileID: 6730867868804794241}
   - {fileID: 1739971469166833246}
   - {fileID: 3019074366745813393}
-  m_Father: {fileID: 7529300700167981260}
+  m_Father: {fileID: 5982613453174600331}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.19000001, y: 0.47875002}
   m_AnchorMax: {x: 0.8112501, y: 0.8518749}
-  m_AnchoredPosition: {x: -0.5, y: 0.5}
-  m_SizeDelta: {x: 3, y: 3}
+  m_AnchoredPosition: {x: -0.062480927, y: 248.87943}
+  m_SizeDelta: {x: 437.87506, y: 563.6143}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7645778381833941560
 CanvasRenderer:
@@ -822,8 +873,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: REVIVIR
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
-  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -921,12 +972,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8742641124739072017}
-  m_Father: {fileID: 7529300700167981260}
+  m_Father: {fileID: 5982613453174600331}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.19000001, y: 0.353125}
   m_AnchorMax: {x: 0.8112501, y: 0.44750002}
-  m_AnchoredPosition: {x: -0.5, y: -0.5}
-  m_SizeDelta: {x: 3, y: -1}
+  m_AnchoredPosition: {x: -0.062480927, y: -150.27892}
+  m_SizeDelta: {x: 437.87506, y: 140.797}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &260224141553284784
 CanvasRenderer:
@@ -1089,8 +1140,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: X2
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
-  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

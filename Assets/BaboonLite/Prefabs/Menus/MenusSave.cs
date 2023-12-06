@@ -4,5 +4,7 @@ using UnityEngine;
 
 public partial class SaveScript
 {
-    public float puntuacion;
+    //Desactivar en caso de no usar los menus por defecto:
+    public float mejor_puntuacion;
+    public float dinero;
 }
